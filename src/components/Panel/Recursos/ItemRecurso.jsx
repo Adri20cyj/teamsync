@@ -9,7 +9,7 @@ const ItemRecurso = (props) => {
                     {props.url}
                 </a>
             </div>
-            <button class="eliminar">-</button>
+            <button class="eliminar" onClick={() => props.eliminarRecurso(props.id)}>-</button>
         </div>
     )
 }

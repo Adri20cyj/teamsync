@@ -1,9 +1,21 @@
-
+import { useState } from "react";
 import ItemTarea from "./ItemTarea"
+import AgregarTarea from "./AgregarTarea";
 
 import "./TablaTareas.css"
 
 const TablaTareas = () => {
+    const [tareas, setTareas] = useState([
+    ]);
+
+    const agregarTarea = (nuevaTarea) => {
+        const tareaConId = {
+            ...nuevaTarea,
+            id: Date.now()
+        };
+
+        setTareas([...tareas, tareaConId]);
+    };
 
 
     return (
@@ -11,33 +23,21 @@ const TablaTareas = () => {
             <div class="tabla-titulo">
                 <h2>Lista de Tareas</h2>
                 <div class="pendientes">
-                    # pendientes
+                    {tareas.length} pendientes
                 </div>
             </div>
 
             <div class="lista-tareas">
-                <ItemTarea titulo="Coordinar reunion con el contacto" asignado="Alumno 1" />
-
-                <ItemTarea titulo="Escribir el capitulo I del informe" asignado="Alumno 2" />
-                <ItemTarea titulo="Investigar sobre la metodologia" asignado="Alumno 3" />
-                <ItemTarea titulo="Diseñar la encuesta para el cliente" asignado="Alumno 4" />
-
+                {tareas.map((tarea) => (
+                    <ItemTarea
+                        key={tarea.id}
+                        titulo={tarea.titulo}
+                        asignado={tarea.asignado}
+                    />
+                ))}
             </div>
 
-            <div class="ingresar-tarea">
-                <div class="selector-alumnos">
-                    <p> Asignado a: </p>
-                    <select class="selector">
-                        <option>Todos</option>
-                        <option>Alumno 1</option>
-                        <option>Alumno 2</option>
-                        <option>Alumno 3</option>
-                    </select>
-                </div>
-
-                <input type="text" placeholder="Escribe una tarea..." />
-                <button class="añadir-tarea"> + </button>
-            </div>
+            <AgregarTarea onAgregar={agregarTarea} />
         </div>
     )
 }
