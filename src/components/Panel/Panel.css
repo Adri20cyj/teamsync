@@ -1,0 +1,27 @@
+main {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background-color: #05010d;
+    min-height: 100vh;
+    margin: 0;
+    overflow: auto;
+
+}
+
+.panel-tareas {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 65%;
+    margin-left: 50px;
+
+}
+
+.panel-recursos {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    margin-right: 50px;
+
+}

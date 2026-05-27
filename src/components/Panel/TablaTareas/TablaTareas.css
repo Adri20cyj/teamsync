@@ -1,0 +1,106 @@
+.tabla-tareas {
+    background-color: #0d0717;
+    border-radius: 24px;
+    padding: 24px;
+    color: white;
+}
+
+.tabla-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.tabla-titulo h2 {
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
+    text-shadow: 0 0 8px rgba(124, 58, 237, 0.25);
+}
+
+.pendientes {
+    background-color: #6d28d9;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: .9rem;
+    color: rgb(202, 180, 247);
+
+}
+
+.lista-tareas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+
+.ingresar-tarea {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.selector-alumno {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.selector-alumno p {
+    font-size: 0.75rem;
+    color: #8f8f9d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+
+.selector {
+    background-color: #140d23;
+    border: 1px solid #24163d;
+    padding: 6px 6px;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input {
+    background-color: #140d23;
+    border: 1px solid #24163d;
+    padding: 16px;
+    border-radius: 16px;
+    color: white;
+    font-size: 0.95rem;
+    width: 100%;
+
+}
+
+
+.añadir-tarea {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    border: 1px solid #2a054d;
+    background-color: #2a054d;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.añadir-tarea:hover {
+    background-color: #a15de0;
+    border: 1px solid #2a054d;
+}

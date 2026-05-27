@@ -1,0 +1,109 @@
+.resumen {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    border: 0.5px solid #5a377d;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background-color: #170528cf;
+
+
+}
+
+.resumen-datos,
+.resumen-nombre,
+.progreso-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+
+.titulo {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+.curso,
+.fecha-inicio,
+.fecha-final {
+    align-self: center;
+    font-size: 0.9rem;
+    color: #c19ae6;
+    background-color: #45216773;
+    border: 2px solid #6e32a5;
+    border-radius: 8px;
+    padding: 6px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.progreso-contenedor {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #2a054d;
+    border: 2px solid #2a054d;
+    border-radius: 8px;
+}
+
+.progreso-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.texto-progreso {
+    font-size: 15px;
+    color: white;
+}
+
+.texto-porcentaje {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: rgb(170, 115, 224);
+
+}
+
+.barra-progreso {
+    border: 1px solid #9259c7;
+    width: 100%;
+    height: 10px;
+    border-radius: 8px;
+    background-color: #9259c7;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.boton-dashboard {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    border: 1px solid #2a054d;
+    background-color: #2a054d;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.boton-dashboard:hover {
+    background-color: #a15de0;
+    border: 1px solid #2a054d;
+
+}

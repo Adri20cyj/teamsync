@@ -1,0 +1,97 @@
+.recursos-principal {
+    background-color: #140d23;
+    border-radius: 24px;
+    padding: 24px;
+    color: white;
+    border: 1px solid #140d23;
+}
+
+.recursos-principal h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: white;
+    justify-self: center;
+}
+
+.contenedor-recursos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.recursos {
+    border: 1px solid #7c3aed;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.ingresar-recurso {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border: 1px solid #7c3aed;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+
+.nombre-recurso {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.url-recurso {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+.input-nombre {
+    flex: 1;
+    background-color: #140d23;
+    border: 1px solid #24163d;
+    padding: 16px;
+    border-radius: 16px;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.contenedor-url {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.input-url {
+    background-color: #140d23;
+    border: 1px solid #24163d;
+    padding: 16px;
+    border-radius: 16px;
+    color: white;
+    font-size: 0.95rem;
+}
+
+
+.añadir {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    border: 1px solid #2a054d;
+    background-color: #2a054d;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.añadir:hover {
+    background-color: #a15de0;
+    border: 1px solid #2a054d;
+
+}
