@@ -1,6 +1,6 @@
 import "./Header.css"
 
-const Header = () => {
+const Header = ({setPestanaActiva}) => {
 
     return (
         <header>
@@ -10,8 +10,11 @@ const Header = () => {
             <div class="separador"></div>
             <div class="botones">
                 <button class="boton-header">Volver a Proyectos</button>
-                <button class="boton-header">Panel de Tareas</button>
+                <button class="boton-header" onClick={() => setPestanaActiva('tareas')}>Panel de Tareas</button>
                 <button class="boton-header">Panel de Anuncios</button>
+                <button className="boton-header" onClick={() => setPestanaActiva('dashboard')}>Dashboard</button>
+
+                
             </div>
         </header>
 

@@ -4,9 +4,7 @@ import AgregarTarea from "./AgregarTarea";
 
 import "./TablaTareas.css"
 
-const TablaTareas = () => {
-    const [tareas, setTareas] = useState([
-    ]);
+const TablaTareas = ({ tareas, setTareas }) => {
 
     const agregarTarea = (nuevaTarea) => {
         const tareaConId = {

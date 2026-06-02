@@ -1,0 +1,71 @@
+.db-subtareas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+.db-mini-tag {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    color: #9ca3af;
+    margin-bottom: 8px;
+}
+
+.db-item-tarea {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    font-size: 12px;
+    padding: 6px 8px;
+    background-color: rgba(13, 7, 23, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.db-checkbox {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+}
+
+.db-checkbox-hecho {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+    color: #ffffff;
+}
+
+.db-check-icono {
+    width: 10px;
+    height: 10px;
+}
+
+.db-tarea-desc {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #e5e7eb;
+}
+
+.line-through { text-decoration: line-through; }
+.opacity-40 { opacity: 0.4; }
+
+.db-sin-tareas {
+    font-size: 10px;
+    color: #6b7280;
+    font-style: italic;
+    font-weight: 500;
+    margin: 0;
+}
