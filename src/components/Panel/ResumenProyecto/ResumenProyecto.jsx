@@ -1,8 +1,11 @@
 import "./ResumenProyecto.css"
 
 
-const ResumenProyecto = () => {
+const ResumenProyecto = ({ tareas = [], tareasCompletas = [] }) => {
 
+    const total = tareas.length;
+    const porcentaje = total > 0 ? Math.round((tareasCompletas.length / total) * 100) : 0;
+    console.log({ totalTareas: total, completas: tareasCompletas.length, porcentaje });
     return (
         <div class="resumen">
             <div class="resumen-datos">
@@ -19,9 +22,10 @@ const ResumenProyecto = () => {
             <div class="progreso-contenedor">
                 <div class="progreso-info">
                     <p class="texto-progreso">Progreso del proyecto :</p>
-                    <p class="texto-porcentaje"> # % completado </p>
+                    <p class="texto-porcentaje"> {porcentaje} % completado </p>
                 </div>
                 <div class="barra-progreso">
+                    <div class="progreso-llenado" style={{ width: `${porcentaje}%` }}></div>
                 </div>
             </div>
         </div>
