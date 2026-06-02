@@ -15,7 +15,7 @@ const Panel = () => {
         { id: 106, asignado: 'maria@universidad.edu.pe', titulo: 'tarea 1', estaTerminada: false }
             
     ]);
-    const [miembros, setMiembros] = useState([ /*prueba*/
+    const [miembros] = useState([ /*prueba*/
         { id: 1, email: 'angie@universidad.edu.pe' },
         { id: 2, email: 'juan@universidad.edu.pe' },
         { id: 3, email: 'maria@universidad.edu.pe' }
