@@ -6,7 +6,7 @@ import TablaTareas from "./TablaTareas/TablaTareas"
 import "./Panel.css"
 import DashboardRendimiento from "./DashboardRendimiento/DashboardRendimiento"
 
-const Panel = () => {
+const Panel = ({ onVolver, proyecto }) => {
     const [pestanaActiva, setPestanaActiva] = useState('tareas');
     const [tareas, setTareas] = useState([ /*prueba*/
         { id: 101, asignado: 'angie@universidad.edu.pe', titulo: 'tarea 1', estaTerminada: true },
@@ -23,10 +23,10 @@ const Panel = () => {
     
     return (
         <>
-            <Header setPestanaActiva={setPestanaActiva}/>
+            <Header setPestanaActiva={setPestanaActiva} onVolver={onVolver}/>
             <main>
                 <section className="panel-tareas">
-                    <ResumenProyecto setPestanaActiva={setPestanaActiva}/>
+                    <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyecto}/>
                     {pestanaActiva === 'tareas' && <TablaTareas tareas={tareas} setTareas={setTareas}/>}
                     {pestanaActiva === 'dashboard' && <DashboardRendimiento pestanaActiva={pestanaActiva} tareas={tareas} miembros={miembros} />}
                 </section>
