@@ -12,7 +12,6 @@ const Header = ({setPestanaActiva}) => {
                 <button class="boton-header">Volver a Proyectos</button>
                 <button class="boton-header" onClick={() => setPestanaActiva('tareas')}>Panel de Tareas</button>
                 <button class="boton-header">Panel de Anuncios</button>
-                <button className="boton-header" onClick={() => setPestanaActiva('dashboard')}>Dashboard</button>
 
                 
             </div>
