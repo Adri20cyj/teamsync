@@ -1,22 +1,29 @@
 import "./ResumenProyecto.css"
 
 
-const ResumenProyecto = ({ tareas = [], tareasCompletas = [] }) => {
+const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasCompletas = [] }) => {
+    const title = proyecto ? proyecto.title : "Nombre Proyecto";
+    const tag = proyecto ? proyecto.tag : "Nombre Curso";
+    const startDate = proyecto ? proyecto.startDate : "Fecha de inicio";
+    const endDate = proyecto ? proyecto.endDate : "Fecha de final";
+
 
     const total = tareas.length;
-    const porcentaje = total > 0 ? Math.round((tareasCompletas.length / total) * 100) : 0;
+    const porcentajeCalculado = total > 0 ? Math.round((tareasCompletas.length / total) * 100) : 0;
+    const porcentaje = proyecto && proyecto.progress !== undefined ? proyecto.progress : porcentajeCalculado;
+
     console.log({ totalTareas: total, completas: tareasCompletas.length, porcentaje });
-    return (
-        <div class="resumen">
-            <div class="resumen-datos">
-                <div class="curso">Nombre Curso</div>
-                <div class="fecha-inicio">Fecha de inicio</div>
-                <div class="fecha-final">Fecha de final</div>
+  return (
+        <div className="resumen">
+            <div className="resumen-datos">
+                <div className="curso">{tag}</div>
+                <div className="fecha-inicio">Inicio: {startDate}</div>
+                <div className="fecha-final">Fin: {endDate}</div>
             </div>
 
-            <div class="resumen-nombre">
-                <h1 class="titulo">Nombre Proyecto</h1>
-                <button class="boton-dashboard">Ir a Dashboard</button>
+            <div className="resumen-nombre">
+                <h1 className="titulo">{title}</h1>
+                <button onClick={() => setPestanaActiva('dashboard')} className="boton-dashboard">Ir a Dashboard</button>
             </div>
 
             <div class="progreso-contenedor">

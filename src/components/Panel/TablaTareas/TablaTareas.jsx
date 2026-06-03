@@ -5,16 +5,25 @@ import AgregarTarea from "./AgregarTarea";
 
 import "./TablaTareas.css"
 
-const TablaTareas = ({ tareas, setTareas }) => {
-    const [tareasCompletas, setTareasCompletas] = useState([]);
-
+const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
     const agregarTarea = (nuevaTarea) => {
         const tareaConId = {
             ...nuevaTarea,
-            id: Date.now()
+            id: Date.now(),
+            estaTerminada: false
         };
 
         setTareas([...tareas, tareaConId]);
+        const existeMiembro = miembros.some(m => m.email === tareaConId.asignado);
+
+        if (!existeMiembro && tareaConId.asignado !== "Todos") {
+            const nuevoMiembro = {
+                id: miembros.length + 1,
+                email: tareaConId.asignado
+            };
+            setMiembros([...miembros, nuevoMiembro]);
+        }  
+        
     };
 
     const checkTarea = (id) => {
@@ -48,7 +57,7 @@ const TablaTareas = ({ tareas, setTareas }) => {
                 ))}
             </div>
 
-            <AgregarTarea onAgregar={agregarTarea} />
+            <AgregarTarea onAgregar={agregarTarea} miembros={miembros}/>
         </div>
     )
 }

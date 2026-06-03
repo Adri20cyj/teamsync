@@ -26,15 +26,16 @@
 
 .titulo {
     color: white;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
     font-size: 25px;
-    font-weight: bold;
-
 }
 
 .curso,
 .fecha-inicio,
 .fecha-final {
     align-self: center;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     color: #c19ae6;
     background-color: #45216773;
