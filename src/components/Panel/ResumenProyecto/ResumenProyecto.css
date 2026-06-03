@@ -1,16 +1,15 @@
 .resumen {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     margin: 20px 0;
-    border: 0.5px solid #5a377d;
-    padding: 15px;
+    border: 1px solid rgba(124, 109, 242, 0.12);
+    padding: 20px;
     position: relative;
     overflow: hidden;
-    border-radius: 15px;
-    background-color: #170528cf;
-
-
+    border-radius: 24px;
+    background-color: #0c071d;
+    box-shadow: 0 8px 32px rgba(5, 1, 13, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .resumen-datos,
@@ -23,40 +22,64 @@
     z-index: 2;
 }
 
+.resumen-datos {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
 .titulo {
     color: white;
     font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2rem;
     font-weight: 700;
-    font-size: 25px;
+    margin: 0;
+    line-height: 1.2;
 }
 
-.curso,
+.curso {
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    background-color: #17112c;
+    border: 1px solid rgba(124, 109, 242, 0.2);
+    color: #8b7eff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+}
+
 .fecha-inicio,
 .fecha-final {
     align-self: center;
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(124, 109, 242, 0.06);
+    border: 1px solid rgba(124, 109, 242, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    color: #c19ae6;
-    background-color: #45216773;
-    border: 2px solid #6e32a5;
-    border-radius: 8px;
-    padding: 6px;
-    font-weight: bold;
+    font-size: 0.75rem;
+    color: #a29ebc;
+    font-weight: 600;
     transition: all 0.2s ease;
-    margin-left: 4px;
-    margin-right: 4px;
 }
 
 .progreso-contenedor {
     display: flex;
     flex-direction: column;
-    padding: 15px;
-    justify-content: space-between;
+    background: rgba(13, 8, 28, 0.4);
+    border: 1px solid rgba(124, 109, 242, 0.08);
+    border-radius: 18px;
+    padding: 1.1rem 1.4rem;
+    margin-top: 10px;
+    box-sizing: border-box;
     align-items: flex-start;
-    background-color: #2a054d;
-    border: 2px solid #2a054d;
-    border-radius: 8px;
 }
 
 .progreso-info {
@@ -68,55 +91,60 @@
 }
 
 .texto-progreso {
-    font-size: 15px;
-    color: rgb(188, 143, 223);
-    font-weight: bold;
-    padding-bottom: 10px;
-
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #a29ebc;
+    margin: 0;
 }
 
 .texto-porcentaje {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: rgb(170, 115, 224);
-
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #8b7eff;
+    margin: 0;
 }
 
 .barra-progreso {
     width: 100%;
-    background-color: #e6d0f1;
-    border-radius: 5px;
-    height: 12px;
+    background-color: #120a26;
+    border-radius: 4px;
+    height: 8px;
     overflow: hidden;
-    box-shadow: 0 0 5px #000;
-
 }
 
 .progreso-llenado {
     height: 100%;
-    background-color: #bf7af1;
-    transition: width 0.3s ease;
-    border-radius: 5px;
-
-
+    background: linear-gradient(90deg, #7c6df2 0%, #a295ff 100%);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 4px;
 }
 
 .boton-dashboard {
-    display: flex;
-    flex-direction: row;
-    padding: 10px 20px;
-    border: 1px solid #2a054d;
-    background-color: #2a054d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #7c6df2, #5a4cd0);
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.2rem;
     border-radius: 10px;
-    color: white;
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
-    text-align: center;
+    box-shadow: 0 4px 12px rgba(124, 109, 242, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .boton-dashboard:hover {
-    background-color: #a15de0;
-    border: 1px solid #2a054d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(124, 109, 242, 0.35);
+    background: linear-gradient(135deg, #8c7eff, #6858e3);
+}
 
+.boton-dashboard:active {
+    transform: translateY(0);
 }
