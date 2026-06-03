@@ -9,11 +9,8 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
 
 
     const total = tareas.length;
-    const porcentajeCalculado = total > 0 ? Math.round((tareasCompletas.length / total) * 100) : 0;
-    const porcentaje = proyecto && proyecto.progress !== undefined ? proyecto.progress : porcentajeCalculado;
-
-    console.log({ totalTareas: total, completas: tareasCompletas.length, porcentaje });
-  return (
+    const porcentaje = total > 0 ? Math.round((tareasCompletas.length / total) * 100) : 0;
+    return (
         <div className="resumen">
             <div className="resumen-datos">
                 <div className="curso">{tag}</div>

@@ -22,18 +22,17 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
                 email: tareaConId.asignado
             };
             setMiembros([...miembros, nuevoMiembro]);
-        }  
-        
+        }
+
     };
 
     const checkTarea = (id) => {
         setTareas(prevTareas =>
             prevTareas.map(tarea =>
-                tarea.id === id ? { ...tarea, check: !tarea.check } : tarea
+                tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
             )
         );
     };
-
     const completasCount = tareas.filter(t => t.check).length;
 
     return (
@@ -57,7 +56,7 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
                 ))}
             </div>
 
-            <AgregarTarea onAgregar={agregarTarea} miembros={miembros}/>
+            <AgregarTarea onAgregar={agregarTarea} miembros={miembros} />
         </div>
     )
 }

@@ -11,7 +11,8 @@ const AgregarTarea = ({ onAgregar, miembros }) => {
         onAgregar({
             titulo: titulo,
             asignado: asignado,
-            check: false
+            check: false,
+            estaTerminada: false
         });
         setTitulo("");
     };
