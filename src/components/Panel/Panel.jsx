@@ -27,7 +27,7 @@ const Panel = ({ onVolver, proyecto }) => {
             <main>
                 <section className="panel-tareas">
                     <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyecto}/>
-                    {pestanaActiva === 'tareas' && <TablaTareas tareas={tareas} setTareas={setTareas}/>}
+                    {pestanaActiva === 'tareas' && <TablaTareas tareas={tareas} setTareas={setTareas} miembros={miembros}/>}
                     {pestanaActiva === 'dashboard' && <DashboardRendimiento pestanaActiva={pestanaActiva} tareas={tareas} miembros={miembros} setTareas={setTareas} setMiembros={setMiembros} />}
                 </section>
 
