@@ -4,12 +4,14 @@ const AgregarTarea = ({ onAgregar, miembros }) => {
     const [titulo, setTitulo] = useState("");
     const [asignado, setAsignado] = useState("Todos");
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (titulo.trim() === "") return;
         onAgregar({
             titulo: titulo,
-            asignado: asignado
+            asignado: asignado,
+            check: false
         });
         setTitulo("");
     };

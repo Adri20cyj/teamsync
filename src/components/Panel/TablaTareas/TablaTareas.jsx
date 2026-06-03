@@ -2,10 +2,10 @@ import { useState } from "react";
 import ItemTarea from "./ItemTarea"
 import AgregarTarea from "./AgregarTarea";
 
+
 import "./TablaTareas.css"
 
-const TablaTareas = ({ tareas, setTareas, miembros, setMiembros}) => {
-
+const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
     const agregarTarea = (nuevaTarea) => {
         const tareaConId = {
             ...nuevaTarea,
@@ -26,13 +26,22 @@ const TablaTareas = ({ tareas, setTareas, miembros, setMiembros}) => {
         
     };
 
+    const checkTarea = (id) => {
+        setTareas(prevTareas =>
+            prevTareas.map(tarea =>
+                tarea.id === id ? { ...tarea, check: !tarea.check } : tarea
+            )
+        );
+    };
+
+    const completasCount = tareas.filter(t => t.check).length;
 
     return (
         <div class="tabla-tareas">
             <div class="tabla-titulo">
                 <h2>Lista de Tareas</h2>
                 <div class="pendientes">
-                    {tareas.length} pendientes
+                    {tareas.length - completasCount} pendientes
                 </div>
             </div>
 
@@ -42,6 +51,8 @@ const TablaTareas = ({ tareas, setTareas, miembros, setMiembros}) => {
                         key={tarea.id}
                         titulo={tarea.titulo}
                         asignado={tarea.asignado}
+                        check={tarea.check}
+                        onCheck={() => checkTarea(tarea.id)}
                     />
                 ))}
             </div>

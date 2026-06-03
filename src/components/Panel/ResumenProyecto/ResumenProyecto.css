@@ -69,7 +69,10 @@
 
 .texto-progreso {
     font-size: 15px;
-    color: white;
+    color: rgb(188, 143, 223);
+    font-weight: bold;
+    padding-bottom: 10px;
+
 }
 
 .texto-porcentaje {
@@ -80,14 +83,23 @@
 }
 
 .barra-progreso {
-    border: 1px solid #9259c7;
     width: 100%;
-    height: 10px;
-    border-radius: 8px;
-    background-color: #9259c7;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #e6d0f1;
+    border-radius: 5px;
+    height: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 5px #000;
+
 }
 
+.progreso-llenado {
+    height: 100%;
+    background-color: #bf7af1;
+    transition: width 0.3s ease;
+    border-radius: 5px;
+
+
+}
 
 .boton-dashboard {
     display: flex;
