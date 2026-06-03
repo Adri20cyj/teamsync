@@ -4,7 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 import './Login.css';
 
 const Login = () => {
-    const { iniciarSesion } = useAuth();
+    const { login } = useAuth();
     const navegar = useNavigate();
 
     const [datosFormulario, setDatosFormulario] = useState({
@@ -26,14 +26,18 @@ const Login = () => {
             return;
         }
         setCargando(true);
-        // Simular pequeña latencia
         await new Promise(r => setTimeout(r, 400));
-        const resultado = iniciarSesion(datosFormulario.email, datosFormulario.contrasena);
+        const resultado = login(datosFormulario.email, datosFormulario.contrasena);
         setCargando(false);
         if (resultado.exito) {
-            navegar('/');
+            // Redirige según el tipo de sesión detectado
+            if (resultado.tipo === 'admin') {
+                navegar('/admin/usuarios');
+            } else {
+                navegar('/');
+            }
         } else {
-            setErrorMensaje(resultado.mensaje);
+            setErrorMensaje(resultado.mensaje || 'Correo o contraseña incorrectos.');
         }
     };
 
@@ -101,9 +105,6 @@ const Login = () => {
                             Regístrate aquí
                         </Link>
                     </p>
-                    <Link to="/admin/login" className="enlace-admin" id="ir-admin-login">
-                        Acceso de administrador →
-                    </Link>
                 </div>
             </div>
         </div>

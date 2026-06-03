@@ -45,8 +45,10 @@ export const AuthProvider = ({ children }) => {
 
     // Iniciar sesión usuario
     const iniciarSesion = (email, contrasena) => {
+        const emailLimpio = email.trim().toLowerCase();
+        const contraseneLimpia = contrasena.trim();
         const usuarios = obtenerUsuarios();
-        const usuario = usuarios.find(u => u.email === email && u.contrasena === contrasena);
+        const usuario = usuarios.find(u => u.email.toLowerCase() === emailLimpio && u.contrasena === contraseneLimpia);
         if (!usuario) return { exito: false, mensaje: 'Correo o contraseña incorrectos.' };
         if (!usuario.activo) return { exito: false, mensaje: 'Tu cuenta está desactivada. Contacta al administrador.' };
         const sesion = { id: usuario.id, nombre: usuario.nombre, apellido: usuario.apellido, email: usuario.email, fechaRegistro: usuario.fechaRegistro };
@@ -61,17 +63,34 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('usuarioActual');
     };
 
-    // Iniciar sesión administrador
+    // Iniciar sesión administrador (interno)
     const iniciarSesionAdmin = (email, contrasena) => {
         const ADMIN_EMAIL = 'admin@teamsync.com';
         const ADMIN_CONTRASENA = 'Admin123';
-        if (email === ADMIN_EMAIL && contrasena === ADMIN_CONTRASENA) {
+        const emailLimpio = email.trim().toLowerCase();
+        const contrasenaLimpia = contrasena.trim();
+        if (emailLimpio === ADMIN_EMAIL && contrasenaLimpia === ADMIN_CONTRASENA) {
             const sesionAdmin = { email: ADMIN_EMAIL, nombre: 'Administrador' };
             setAdminActual(sesionAdmin);
             localStorage.setItem('adminActual', JSON.stringify(sesionAdmin));
             return { exito: true };
         }
-        return { exito: false, mensaje: 'Credenciales de administrador incorrectas.' };
+        return { exito: false };
+    };
+
+    // Login unificado: detecta automáticamente si es admin o usuario
+    const login = (email, contrasena) => {
+        // Primero verifica si son credenciales de administrador
+        const resultadoAdmin = iniciarSesionAdmin(email, contrasena);
+        if (resultadoAdmin.exito) {
+            return { exito: true, tipo: 'admin' };
+        }
+        // Si no, intenta como usuario normal
+        const resultadoUsuario = iniciarSesion(email, contrasena);
+        if (resultadoUsuario.exito) {
+            return { exito: true, tipo: 'usuario' };
+        }
+        return { exito: false, mensaje: resultadoUsuario.mensaje };
     };
 
     // Cerrar sesión administrador
@@ -103,6 +122,7 @@ export const AuthProvider = ({ children }) => {
             usuarioActual,
             adminActual,
             cargando,
+            login,
             registrarUsuario,
             iniciarSesion,
             cerrarSesion,

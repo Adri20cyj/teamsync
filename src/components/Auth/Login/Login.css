@@ -214,19 +214,3 @@
     color: #a89fff;
     text-decoration: underline;
 }
-
-.enlace-admin {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    color: #5a5475;
-    text-decoration: none;
-    border-top: 1px solid rgba(124, 109, 242, 0.08);
-    padding-top: 0.8rem;
-    width: 100%;
-    text-align: center;
-    transition: color 0.2s ease;
-}
-
-.enlace-admin:hover {
-    color: #8c86a6;
-}
