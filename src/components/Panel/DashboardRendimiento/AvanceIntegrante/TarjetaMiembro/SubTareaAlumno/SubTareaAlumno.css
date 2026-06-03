@@ -47,13 +47,4 @@
     font-weight: 500;
     margin: 0;
 }
-.db-btn-estado {
-    padding: 3px 6px;
-    font-size: 10px;
-    border-radius: 4px;
-    background-color: #8b5cf6; 
-    border: none;
-    cursor: pointer;
-    flex-shrink: 0;
-    color: white; 
-}
+
