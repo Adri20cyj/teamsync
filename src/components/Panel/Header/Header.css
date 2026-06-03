@@ -44,18 +44,29 @@ header {
     display: flex;
     flex-direction: row;
     padding: 10px 20px;
-    border: 1px solid #2a054d;
-    background-color: #2a054d;
+    border: 1px solid #aa55fa;
+    background-color: #37105cec;
     border-radius: 10px;
     color: white;
     font-size: 1rem;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+
 }
 
 .boton-header:hover {
-    background-color: #a15de0;
-    border: 1px solid #2a054d;
+    background-color: #9b51e9;
+    border: 1px solid #dac6ed;
+    box-shadow: 0 4px 15px rgba(149, 64, 218, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 15px rgba(149, 64, 218, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
 
 }
