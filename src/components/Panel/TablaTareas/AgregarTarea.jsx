@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AgregarTarea = ({ onAgregar }) => {
+const AgregarTarea = ({ onAgregar, miembros }) => {
     const [titulo, setTitulo] = useState("");
     const [asignado, setAsignado] = useState("Todos");
 
@@ -19,10 +19,11 @@ const AgregarTarea = ({ onAgregar }) => {
                 <p>Asignado a:</p>
                 <select class="selector" value={asignado} onChange={(e) => setAsignado(e.target.value)}>
                     <option value="Todos">Todos</option>
-                    <option value="Alumno 1">Alumno 1</option>
-                    <option value="Alumno 2">Alumno 2</option>
-                    <option value="Alumno 3">Alumno 3</option>
-                    <option value="Alumno 4">Alumno 4</option>
+                    {miembros.map((miembro) => (
+                        <option key={miembro.id} value={miembro.email}>
+                            {miembro.email}
+                        </option>
+                    ))}
                 </select>
             </div>
 
