@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import {motion} from 'framer-motion'
-
 import './DashboardRendimiento.css'
 import AvanceGeneral from './AvanceGeneral/AvanceGeneral'
 import AvanceIntegrante from './AvanceIntegrante/AvanceIntegrante'
