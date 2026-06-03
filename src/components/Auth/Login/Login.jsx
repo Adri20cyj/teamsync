@@ -1,0 +1,113 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
+import './Login.css';
+
+const Login = () => {
+    const { iniciarSesion } = useAuth();
+    const navegar = useNavigate();
+
+    const [datosFormulario, setDatosFormulario] = useState({
+        email: '',
+        contrasena: ''
+    });
+    const [errorMensaje, setErrorMensaje] = useState('');
+    const [cargando, setCargando] = useState(false);
+
+    const handleCambio = (e) => {
+        setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value });
+        setErrorMensaje('');
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!datosFormulario.email || !datosFormulario.contrasena) {
+            setErrorMensaje('Por favor completa todos los campos.');
+            return;
+        }
+        setCargando(true);
+        // Simular pequeña latencia
+        await new Promise(r => setTimeout(r, 400));
+        const resultado = iniciarSesion(datosFormulario.email, datosFormulario.contrasena);
+        setCargando(false);
+        if (resultado.exito) {
+            navegar('/');
+        } else {
+            setErrorMensaje(resultado.mensaje);
+        }
+    };
+
+    return (
+        <div className="login-pagina">
+            <div className="login-card">
+                <div className="login-logo">
+                    <h1>TeamSync</h1>
+                    <span>Gestión de proyectos colaborativos</span>
+                </div>
+
+                <hr className="login-separador" />
+
+                <p className="login-titulo-form">Iniciar Sesión</p>
+
+                <form className="login-formulario" onSubmit={handleSubmit} id="formulario-login">
+                    {errorMensaje && (
+                        <div className="mensaje-error" role="alert">
+                            {errorMensaje}
+                        </div>
+                    )}
+
+                    <div className="campo-formulario">
+                        <label htmlFor="email-login">Correo electrónico</label>
+                        <input
+                            id="email-login"
+                            type="email"
+                            name="email"
+                            placeholder="correo@ejemplo.com"
+                            value={datosFormulario.email}
+                            onChange={handleCambio}
+                            className={errorMensaje ? 'campo-error' : ''}
+                            autoComplete="email"
+                        />
+                    </div>
+
+                    <div className="campo-formulario">
+                        <label htmlFor="contrasena-login">Contraseña</label>
+                        <input
+                            id="contrasena-login"
+                            type="password"
+                            name="contrasena"
+                            placeholder="Tu contraseña"
+                            value={datosFormulario.contrasena}
+                            onChange={handleCambio}
+                            className={errorMensaje ? 'campo-error' : ''}
+                            autoComplete="current-password"
+                        />
+                    </div>
+
+                    <button
+                        id="boton-iniciar-sesion"
+                        type="submit"
+                        className="boton-principal"
+                        disabled={cargando}
+                    >
+                        {cargando ? 'Verificando...' : 'Entrar'}
+                    </button>
+                </form>
+
+                <div className="login-enlaces">
+                    <p>
+                        ¿No tienes cuenta?{' '}
+                        <Link to="/registro" className="enlace-accion" id="ir-registro">
+                            Regístrate aquí
+                        </Link>
+                    </p>
+                    <Link to="/admin/login" className="enlace-admin" id="ir-admin-login">
+                        Acceso de administrador →
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Login;

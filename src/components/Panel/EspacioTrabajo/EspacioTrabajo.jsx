@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./EspacioTrabajo.css";
 import { PlusIcon, UserIcon } from "./Icons/Icons";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
 
-const EspacioTrabajo = ({ onSelectProyecto }) => {
+const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
     const [proyectos, setProyectos] = useState([
         {
             id: 2,
@@ -114,12 +115,18 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
         setMostrarUnirseModal(false);
     };
 
+    // Iniciales para el mini-avatar
+    const inicialesUsuario = usuarioActual
+        ? `${usuarioActual.nombre?.[0] ?? ''}${usuarioActual.apellido?.[0] ?? ''}`.toUpperCase()
+        : '';
+
     return (
         <div className="espacio-trabajo-container">
             <div className="espacio-trabajo-header">
                 <div className="header-text-container">
                     <h1 className="proyectos-titulo">Tus Proyectos</h1>
                     <p className="proyectos-subtitulo">
+                        {usuarioActual ? `Bienvenido, ${usuarioActual.nombre}. ` : ''}
                         Gestiona, organiza tareas y sincroniza el trabajo grupal de tus cursos u organizaciones.
                     </p>
                 </div>
@@ -132,6 +139,11 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
                         <UserIcon />
                         <span>Unirse con Código</span>
                     </button>
+                    {usuarioActual && (
+                        <Link to="/perfil" className="avatar-usuario-header" id="ir-perfil" title="Ver mi perfil">
+                            <span className="avatar-iniciales">{inicialesUsuario}</span>
+                        </Link>
+                    )}
                 </div>
             </div>
 
