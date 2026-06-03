@@ -2,7 +2,7 @@ import './AvanceIntegrante.css'
 import TarjetaMiembro from './TarjetaMiembro/TarjetaMiembro'    
 const AvanceIntegrante = ({miembros = [], 
     cargasTrabajo = [], 
-    tareas = [], onToggle}) => { 
+    tareas = []}) => { 
     return (
         <>
             <div className="db-bloque-individual">
@@ -17,7 +17,7 @@ const AvanceIntegrante = ({miembros = [],
                             key={miembro.id} 
                             miembro={miembro}
                             cargasTrabajo={cargasTrabajo}
-                            tareas={tareas} onToggle={onToggle}/>
+                            tareas={tareas}/>
                     ))}
                 </div>
             </div>
