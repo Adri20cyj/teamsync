@@ -31,7 +31,7 @@ const Panel = ({ onVolver, proyecto }) => {
                     <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyecto} tareas={tareas} tareasCompletas={tareasCompletas} />
 
                     {pestanaActiva === 'tareas' && (<TablaTareas tareas={tareas} setTareas={setTareas} miembros={miembros} setMiembros={setMiembros} />)}
-                    {pestanaActiva === 'dashboard' && (<DashboardRendimiento pestanaActiva={pestanaActiva} tareas={tareas} miembros={miembros} setTareas={setTareas} setMiembros={setMiembros} />)}
+                    {pestanaActiva === 'dashboard' && (<DashboardRendimiento pestanaActiva={pestanaActiva} tareas={tareas} miembros={miembros} setMiembros={setMiembros} />)}
                 </section>
 
                 <section className="panel-recursos">

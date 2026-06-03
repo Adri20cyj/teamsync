@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "./EspacioTrabajo.css";
-import { PlusIcon, CloseIcon } from "./Icons/Icons";
-import GrupoCreado from "./GrupoCreado/GrupoCreado";
-
+import { PlusIcon, UserIcon } from "./Icons/Icons";
+import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
+import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
+import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
 
 const EspacioTrabajo = ({ onSelectProyecto }) => {
     const [proyectos, setProyectos] = useState([
@@ -22,6 +23,9 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
     ]);
 
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarUnirseModal, setMostrarUnirseModal] = useState(false);
+    const [codigoInvitacion, setCodigoInvitacion] = useState("");
+
     const [nuevoProyecto, setNuevoProyecto] = useState({
         title: "",
         tag: "",
@@ -40,20 +44,34 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
         });
     };
 
+    const formatReadableDate = (dateStr) => {
+        if (!dateStr) return "";
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) return dateStr;
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+        const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+        return `${date.getDate()} ${months[date.getMonth()]}`;
+    };
+
     const handleCreateProyecto = (e) => {
         e.preventDefault();
-        if (!nuevoProyecto.title || !nuevoProyecto.tag) return;
+        if (!nuevoProyecto.title) return;
+
+        const projectTag = nuevoProyecto.tag 
+            ? nuevoProyecto.tag.toUpperCase() 
+            : (nuevoProyecto.title ? nuevoProyecto.title.split(' ').map(w => w[0]).join('').slice(0, 5).toUpperCase() : "GRUPO");
 
         const project = {
+            id: Date.now(),
             title: nuevoProyecto.title,
-            tag: nuevoProyecto.tag.toUpperCase(),
+            tag: projectTag,
             description: nuevoProyecto.description || "Sin descripción disponible.",
             progress: 0,
             tasksCompleted: 0,
             tasksTotal: 0,
             membersCount: parseInt(nuevoProyecto.membersCount) || 1,
-            startDate: nuevoProyecto.startDate || "Hoy",
-            endDate: nuevoProyecto.endDate || "Por definir",
+            startDate: formatReadableDate(nuevoProyecto.startDate) || "Hoy",
+            endDate: formatReadableDate(nuevoProyecto.endDate) || "Por definir",
             iconType: nuevoProyecto.iconType
         };
 
@@ -70,6 +88,32 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
         });
     };
 
+    const handleJoinGrupo = (e) => {
+        e.preventDefault();
+        if (!codigoInvitacion.trim()) return;
+
+        const options = { day: 'numeric', month: 'short' };
+        const todayStr = new Date().toLocaleDateString('es-ES', options);
+
+        const project = {
+            id: Date.now(),
+            title: `Proyecto Unido (${codigoInvitacion.toUpperCase()})`,
+            tag: "UNIDO",
+            description: `Grupo unido mediante código de invitación: ${codigoInvitacion.toUpperCase()}`,
+            progress: 0,
+            tasksCompleted: 0,
+            tasksTotal: 0,
+            membersCount: 2,
+            startDate: todayStr,
+            endDate: "Por definir",
+            iconType: "education"
+        };
+
+        setProyectos([...proyectos, project]);
+        setCodigoInvitacion("");
+        setMostrarUnirseModal(false);
+    };
+
     return (
         <div className="espacio-trabajo-container">
             <div className="espacio-trabajo-header">
@@ -79,109 +123,40 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
                         Gestiona, organiza tareas y sincroniza el trabajo grupal de tus cursos u organizaciones.
                     </p>
                 </div>
-                <button className="boton-crear-proyecto" onClick={() => setMostrarModal(true)}>
-                    <PlusIcon />
-                    <span>Crear Proyecto</span>
-                </button>
+                <div className="header-acciones">
+                    <button className="boton-crear-proyecto" onClick={() => setMostrarModal(true)}>
+                        <PlusIcon />
+                        <span>Nuevo Grupo</span>
+                    </button>
+                    <button className="boton-unirse-grupo" onClick={() => setMostrarUnirseModal(true)}>
+                        <UserIcon />
+                        <span>Unirse con Código</span>
+                    </button>
+                </div>
             </div>
 
             <div className="proyectos-divider"></div>
 
-            <div className="proyectos-grid">
-                {proyectos.map((proyecto) => (
-                    <GrupoCreado
-                        key={proyecto.id}
-                        proyecto={proyecto}
-                        onSelectProyecto={onSelectProyecto}
-                    />
-                ))}
-            </div>
+            <ProyectosGrid
+                proyectos={proyectos}
+                onSelectProyecto={onSelectProyecto}
+            />
 
-            {mostrarModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h2>Crear Nuevo Proyecto</h2>
-                            <button className="modal-close-btn" onClick={() => setMostrarModal(false)}>
-                                <CloseIcon />
-                            </button>
-                        </div>
-                        <form onSubmit={handleCreateProyecto} className="modal-form">
-                            <div className="form-group">
-                                <label htmlFor="title">Nombre del Proyecto</label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    required
-                                    placeholder="Ej. Curso de Estructura de Datos"
-                                    value={nuevoProyecto.title}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
+            <CrearProyectoModal
+                mostrarModal={mostrarModal}
+                onClose={() => setMostrarModal(false)}
+                onSubmit={handleCreateProyecto}
+                nuevoProyecto={nuevoProyecto}
+                onInputChange={handleInputChange}
+            />
 
-
-                            <div className="form-group">
-                                <label htmlFor="description">Descripción</label>
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    rows="3"
-                                    placeholder="Describe brevemente el propósito de este proyecto..."
-                                    value={nuevoProyecto.description}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label htmlFor="startDate">Fecha Inicio</label>
-                                    <input
-                                        type="text"
-                                        id="startDate"
-                                        name="startDate"
-                                        placeholder="Ej. 10 nov"
-                                        value={nuevoProyecto.startDate}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="endDate">Fecha Fin</label>
-                                    <input
-                                        type="text"
-                                        id="endDate"
-                                        name="endDate"
-                                        placeholder="Ej. 21 feb"
-                                        value={nuevoProyecto.endDate}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="membersCount">Cantidad de Miembros</label>
-                                <input
-                                    type="number"
-                                    id="membersCount"
-                                    name="membersCount"
-                                    min="1"
-                                    value={nuevoProyecto.membersCount}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-
-                            <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setMostrarModal(false)}>
-                                    Cancelar
-                                </button>
-                                <button type="submit" className="btn-crear">
-                                    Crear Proyecto
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+            <UnirseGrupoModal
+                mostrarModal={mostrarUnirseModal}
+                onClose={() => setMostrarUnirseModal(false)}
+                onSubmit={handleJoinGrupo}
+                codigo={codigoInvitacion}
+                onCodigoChange={setCodigoInvitacion}
+            />
         </div>
     );
 };

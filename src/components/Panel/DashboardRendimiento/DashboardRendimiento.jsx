@@ -18,9 +18,6 @@ const DashboardRendimiento = ({ pestanaActiva, tareas = [], miembros = [] }) => 
             completado: tMiembro.filter(t => t.estaTerminada).length
         };
     });
-    const cambiarEstadoTarea = (id) => {
-        setTareas(tareas.map(t => t.id === id ? { ...t, estaTerminada: !t.estaTerminada } : t));
-    };
 
     return (
         <>
@@ -40,7 +37,7 @@ const DashboardRendimiento = ({ pestanaActiva, tareas = [], miembros = [] }) => 
                         totalMiembros={totalMiembros} tareasCompletadas={tareasCompletadas}
                         tareasPendientes={tareasPendientes} />
                     <AvanceIntegrante miembros={miembros} cargasTrabajo={cargasTrabajo}
-                        tareas={tareas} onToggle={cambiarEstadoTarea} />
+                        tareas={tareas} />
 
                 </section>
             )}

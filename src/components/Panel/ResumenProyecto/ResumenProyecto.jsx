@@ -23,13 +23,13 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
                 <button onClick={() => setPestanaActiva('dashboard')} className="boton-dashboard">Ir a Dashboard</button>
             </div>
 
-            <div class="progreso-contenedor">
-                <div class="progreso-info">
-                    <p class="texto-progreso">Progreso del proyecto :</p>
-                    <p class="texto-porcentaje"> {porcentaje} % completado </p>
+            <div className="progreso-contenedor">
+                <div className="progreso-info">
+                    <p className="texto-progreso">Progreso del proyecto :</p>
+                    <p className="texto-porcentaje"> {porcentaje} % completado </p>
                 </div>
-                <div class="barra-progreso">
-                    <div class="progreso-llenado" style={{ width: `${porcentaje}%` }}></div>
+                <div className="barra-progreso">
+                    <div className="progreso-llenado" style={{ width: `${porcentaje}%` }}></div>
                 </div>
             </div>
         </div>

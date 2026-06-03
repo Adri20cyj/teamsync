@@ -3,8 +3,7 @@ import BarraProgreso from './BarraProgreso/BarraProgreso'
 import SubTareaAlumno from './SubTareaAlumno/SubTareaAlumno'
 const TarjetaMiembro = ({miembro, 
     cargasTrabajo = [], 
-    tareas = [],
-    onToggle}) => { 
+    tareas = []}) => { 
 
     const trabajoMiembro = cargasTrabajo?.find(w => w.email === miembro.email) || { total: 0, completado: 0 };
     const porcentaje = trabajoMiembro.total > 0 ? Math.round((trabajoMiembro.completado / trabajoMiembro.total) * 100) : 0;
@@ -24,7 +23,7 @@ const TarjetaMiembro = ({miembro,
                     </div>
 
                     <BarraProgreso porcentaje={porcentaje} completadas={trabajoMiembro.completado} total={trabajoMiembro.total} />
-                    <SubTareaAlumno listaTareasMiembro={listaTareasMiembro} onToggle={onToggle} />
+                    <SubTareaAlumno listaTareasMiembro={listaTareasMiembro}/>
                     
                 </div>
             </div>        

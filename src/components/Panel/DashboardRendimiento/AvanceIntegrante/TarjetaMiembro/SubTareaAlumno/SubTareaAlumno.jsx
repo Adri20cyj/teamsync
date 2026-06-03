@@ -1,5 +1,5 @@
 import './SubTareaAlumno.css'
-const SubTareaAlumno = ({ listaTareasMiembro=[], onToggle }) => { 
+const SubTareaAlumno = ({ listaTareasMiembro=[]}) => { 
     return (
         <>
             <div className="db-subtareas-lista">
@@ -9,17 +9,11 @@ const SubTareaAlumno = ({ listaTareasMiembro=[], onToggle }) => {
                     <div key={t.id} className="db-item-tarea">
                         
                         <span className={`db-tarea-desc ${t.estaTerminada ? 'line-through opacity-40' : ''}`}> {t.titulo}</span>
-                        <button 
-                                type="button"
-                                className={`db-btn-estado ${t.estaTerminada ? 'completo' : 'pendiente'}`}
-                                onClick={() => onToggle(t.id)} 
-                            >
-                                {t.estaTerminada ? "Completo" : "Pendiente"}
-                        </button>
                         
                     </div>
                 ))) : (<p className="db-sin-tareas">Sin tareas asignadas en este ciclo.</p>)}
-            </div>        </>
+            </div>        
+        </>
     )
 }
 export default SubTareaAlumno

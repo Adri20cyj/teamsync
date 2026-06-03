@@ -21,21 +21,43 @@
 }
 
 .tabla-titulo h2 {
-    font-size: 2rem;
-    color: white;
-    font-weight: bold;
-    letter-spacing: .5px;
-    margin-bottom: 4px;
-    text-shadow: 0 0 8px rgba(124, 58, 237, 0.25);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    margin: 0;
+    text-shadow: none;
+}
+
+.tabla-titulo h2::after {
+    content: "METAS Y COORDINACIÓN";
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #8c86a6;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-style: normal;
+    text-shadow: none;
 }
 
 .pendientes {
-    background-color: #6d28d9;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-size: .9rem;
-    color: rgb(202, 180, 247);
-
+    display: inline-flex;
+    align-items: center;
+    background-color: #17112c;
+    border: 1px solid rgba(124, 109, 242, 0.3);
+    color: #8b7eff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .lista-tareas {
@@ -43,77 +65,113 @@
     flex-direction: column;
     gap: 14px;
     margin-bottom: 24px;
-    /**/
     height: auto;
     overflow: visible;
 }
 
-
 .ingresar-tarea {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    width: 100%;
+    background-color: rgba(13, 8, 28, 0.3);
+    border: 1px solid rgba(124, 109, 242, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.selector-alumno,
+.selector-alumnos {
+    grid-column: span 2;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 12px;
-    align-items: flex-end;
-    /**/
-    flex-shrink: 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(124, 109, 242, 0.08);
+    padding-bottom: 12px;
 }
 
-.selector-alumno {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 150px;
-}
-
-.selector-alumno p {
+.selector-alumno p,
+.selector-alumnos p {
+    font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
-    color: #8f8f9d;
-    font-weight: 600;
+    color: #8b7eff;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-left: 4px;
-    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+    margin: 0;
+    white-space: nowrap;
 }
 
 .selector {
-    background-color: #140d23;
-    border: 1px solid #24163d;
-    padding: 6px 6px;
-    border-radius: 8px;
+    background-color: #0c071d;
+    border: 1px solid rgba(124, 109, 242, 0.25);
+    padding: 8px 16px;
+    border-radius: 999px;
     color: white;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease;
 }
 
+.selector:focus {
+    border-color: #8b7eff;
+    box-shadow: 0 0 10px rgba(124, 109, 242, 0.2);
+}
+
 input {
-    background-color: #140d23;
-    border: 1px solid #24163d;
+    background-color: #0c071d;
+    border: 1px solid rgba(124, 109, 242, 0.2);
     padding: 16px;
     border-radius: 16px;
     color: white;
+    font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
     width: 100%;
-
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
+input:focus {
+    outline: none;
+    border-color: #8b7eff;
+    box-shadow: 0 0 10px rgba(124, 109, 242, 0.2);
+}
+
+input::placeholder {
+    font-style: italic;
+    color: #a29ebc66;
+}
 
 .añadir-tarea {
     display: flex;
-    flex-direction: row;
-    padding: 10px 20px;
-    border: 1px solid #2a054d;
-    background-color: #2a054d;
-    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: none;
+    background: #8b7eff;
+    border-radius: 16px;
     color: white;
-    font-size: 1rem;
+    font-size: 1.8rem;
+    font-weight: 300;
     cursor: pointer;
-    font-weight: bold;
-    text-align: center;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .añadir-tarea:hover {
-    background-color: #a15de0;
-    border: 1px solid #2a054d;
+    background-color: #a399ff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.4);
+}
+
+.añadir-tarea:active {
+    transform: scale(0.95);
 }
