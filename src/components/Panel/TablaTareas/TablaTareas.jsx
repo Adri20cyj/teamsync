@@ -1,37 +1,39 @@
 import { useState } from "react";
 import ItemTarea from "./ItemTarea"
 import AgregarTarea from "./AgregarTarea";
-
+import { useAuth } from "../../../context/AuthContext";
 
 import "./TablaTareas.css"
 
 const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
+    const { usuarioActual, actualizarDatosUsuario } = useAuth();
+
     const agregarTarea = (nuevaTarea) => {
-        const tareaConId = {
-            ...nuevaTarea,
-            id: Date.now(),
-            estaTerminada: false
-        };
 
-        setTareas([...tareas, tareaConId]);
-        const existeMiembro = miembros.some(m => m.email === tareaConId.asignado);
+        const tareasActualizadas = [...tareas, nuevaTarea];
+        setTareas(tareasActualizadas);
+        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
+        const existeMiembro = miembros.some(m => m.email === nuevaTarea.asignado);
 
-        if (!existeMiembro && tareaConId.asignado !== "Todos") {
+        if (!existeMiembro && nuevaTarea.asignado !== "Todos") {
             const nuevoMiembro = {
                 id: miembros.length + 1,
-                email: tareaConId.asignado
+                email: nuevaTarea.asignado
             };
             setMiembros([...miembros, nuevoMiembro]);
         }
 
+
     };
 
     const checkTarea = (id) => {
-        setTareas(prevTareas =>
-            prevTareas.map(tarea =>
-                tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
-            )
+
+        const tareasActualizadas = tareas.map(tarea =>
+            tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
         );
+        setTareas(tareasActualizadas);
+        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
+
     };
     const completasCount = tareas.filter(t => t.check).length;
 
