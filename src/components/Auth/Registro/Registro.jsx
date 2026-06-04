@@ -49,13 +49,7 @@ const Registro = () => {
         }
         setCargando(true);
         await new Promise(r => setTimeout(r, 400));
-        
-<<<<<<< HEAD
-        setCargando(true);
-        // Procesamiento asíncrono que previene bloqueos en la interfaz de React
-        await new Promise(r => setTimeout(r, 400));
-        
-=======
+
         const storedMiembros = localStorage.getItem("miembros");
         const miembrosActuales = JSON.parse(storedMiembros) || [];
 
@@ -68,10 +62,9 @@ const Registro = () => {
             const updatedMiembros = [...miembrosActuales, nuevoMiembro];
             localStorage.setItem("miembros", JSON.stringify(updatedMiembros));
         }
-        
+
         localStorage.setItem("usuarioActivo", datosFormulario.email);
 
->>>>>>> e74503ef9a47f816ea0ed0b8f5fea109013a04ea
         const resultado = registrarUsuario(datosFormulario);
         setCargando(false);
 
