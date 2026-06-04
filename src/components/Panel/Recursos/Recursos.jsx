@@ -5,21 +5,20 @@ import ItemRecurso from "./ItemRecurso"
 
 
 const Recursos = () => {
-    const [recursos, setRecursos] = useState([
-    ]);
+
+    const recursosGuardados = localStorage.getItem("recursos");
+    const [recursos, setRecursos] = useState(JSON.parse(recursosGuardados) || []);
 
     const agregarRecurso = (nuevoRecurso) => {
-        const recursoConId = {
-            ...nuevoRecurso,
-            id: Date.now()
-        };
-
-        setRecursos([...recursos, recursoConId]);
+        const recursosActualizados = [...recursos, nuevoRecurso];
+        localStorage.setItem("recursos", JSON.stringify(recursosActualizados));
+        setRecursos(recursosActualizados);
     };
 
     const eliminarRecurso = (id) => {
-
-        setRecursos(recursos.filter(recurso => recurso.id !== id));
+        const recursosActualizados = recursos.filter(recurso => recurso.id !== id);
+        localStorage.setItem("recursos", JSON.stringify(recursosActualizados));
+        setRecursos(recursosActualizados);
 
     }
 

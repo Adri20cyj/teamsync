@@ -9,6 +9,7 @@ const AgregarTarea = ({ onAgregar, miembros }) => {
         e.preventDefault();
         if (titulo.trim() === "") return;
         onAgregar({
+            id: Date.now(),
             titulo: titulo,
             asignado: asignado,
             check: false,

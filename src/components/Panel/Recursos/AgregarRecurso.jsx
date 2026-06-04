@@ -8,12 +8,14 @@ const AgregarRecurso = ({ onAgregarRecurso }) => {
         e.preventDefault();
         if (nombre.trim() === "") return;
         onAgregarRecurso({
+            id: Date.now(),
             nombre: nombre,
             url: url
         });
         setNombre("");
         setUrl("");
     };
+
     return (
         <form class="ingresar-recurso" onSubmit={handleSubmit}>
             <div class="nombre-recurso">

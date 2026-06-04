@@ -7,31 +7,32 @@ import "./TablaTareas.css"
 
 const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
     const agregarTarea = (nuevaTarea) => {
-        const tareaConId = {
-            ...nuevaTarea,
-            id: Date.now(),
-            estaTerminada: false
-        };
 
-        setTareas([...tareas, tareaConId]);
-        const existeMiembro = miembros.some(m => m.email === tareaConId.asignado);
+        const tareasActualizadas = [...tareas, nuevaTarea];
+        localStorage.setItem("tareas", JSON.stringify(tareasActualizadas));
+        setTareas(tareasActualizadas);
 
-        if (!existeMiembro && tareaConId.asignado !== "Todos") {
+        const existeMiembro = miembros.some(m => m.email === nuevaTarea.asignado);
+
+        if (!existeMiembro && nuevaTarea.asignado !== "Todos") {
             const nuevoMiembro = {
                 id: miembros.length + 1,
-                email: tareaConId.asignado
+                email: nuevaTarea.asignado
             };
             setMiembros([...miembros, nuevoMiembro]);
         }
 
+
     };
 
     const checkTarea = (id) => {
-        setTareas(prevTareas =>
-            prevTareas.map(tarea =>
-                tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
-            )
+
+        const tareasActualizadas = tareas.map(tarea =>
+            tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
         );
+        localStorage.setItem("tareas", JSON.stringify(tareasActualizadas));
+        setTareas(tareasActualizadas);
+
     };
     const completasCount = tareas.filter(t => t.check).length;
 
