@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './GestionUsuarios.css';
 
-/* Modal para cambiar contraseña */
+/* Modal local para cambiar contraseña */
 const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
     const [nuevaContrasena, setNuevaContrasena] = useState('');
     const [confirmar, setConfirmar] = useState('');
@@ -62,11 +62,7 @@ const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
                     <button className="boton-cancelar-modal" onClick={onCerrar} id="boton-cancelar-modal-pass">
                         Cancelar
                     </button>
-                    <button
-                        className="boton-guardar-modal"
-                        onClick={handleGuardar}
-                        id="boton-guardar-nueva-pass"
-                    >
+                    <button className="boton-guardar-modal" onClick={handleGuardar} id="boton-guardar-nueva-pass">
                         Guardar cambios
                     </button>
                 </div>
@@ -80,10 +76,8 @@ const GestionUsuarios = () => {
     const { adminActual, cerrarSesionAdmin, obtenerUsuarios, toggleEstadoUsuario, cambiarContrasenaUsuario } = useAuth();
     const navegar = useNavigate();
 
-    // Forzamos re-render al cambiar usuarios usando un contador
     const [contador, setContador] = useState(0);
     const usuarios = obtenerUsuarios();
-
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
 
     const handleCerrarSesion = () => {
@@ -107,15 +101,14 @@ const GestionUsuarios = () => {
 
     return (
         <div className="gestion-pagina">
-            {/* Header */}
             <div className="gestion-header">
                 <div className="gestion-header-texto">
                     <h1>Gestión de Usuarios</h1>
-                    <p>Administra los usuarios registrados en TeamSync</p>
+                    <p>Administra los usuarios registrados en TeamSync (Modo Local)</p>
                 </div>
                 <div className="gestion-acciones-header">
                     <div className="badge-admin">
-                        <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                        <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }}>
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                         </svg>
                         {adminActual?.nombre || 'Administrador'}
@@ -132,7 +125,6 @@ const GestionUsuarios = () => {
 
             <hr className="gestion-divider" />
 
-            {/* Estadísticas */}
             <div className="gestion-stats">
                 <div className="stat-card">
                     <div className="stat-valor">{totalUsuarios}</div>
@@ -148,7 +140,6 @@ const GestionUsuarios = () => {
                 </div>
             </div>
 
-            {/* Tabla de usuarios */}
             <div className="tabla-contenedor">
                 <div className="tabla-header-barra">
                     <h2>Lista de usuarios</h2>
@@ -216,7 +207,6 @@ const GestionUsuarios = () => {
                 )}
             </div>
 
-            {/* Modal cambio de contraseña */}
             {usuarioSeleccionado && (
                 <ModalCambiarContrasena
                     usuario={usuarioSeleccionado}
