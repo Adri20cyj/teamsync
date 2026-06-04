@@ -16,7 +16,6 @@ const Registro = () => {
     });
     const [errorMensaje, setErrorMensaje] = useState('');
     const [exitoMensaje, setExitoMensaje] = useState('');
-    const [cargando, setCargando] = useState(false);
 
     const handleCambio = (e) => {
         setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value });
@@ -40,20 +39,19 @@ const Registro = () => {
         return null;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const errorValidacion = validar();
         if (errorValidacion) {
             setErrorMensaje(errorValidacion);
             return;
         }
-        setCargando(true);
-        await new Promise(r => setTimeout(r, 400));
+        
         const resultado = registrarUsuario(datosFormulario);
-        setCargando(false);
+
         if (resultado.exito) {
             setExitoMensaje('¡Cuenta creada con éxito! Redirigiendo al inicio de sesión...');
-            setTimeout(() => navegar('/login'), 1800);
+            setTimeout(() => navegar('/login'), 1500);
         } else {
             setErrorMensaje(resultado.mensaje);
         }
@@ -69,7 +67,7 @@ const Registro = () => {
 
                 <hr className="registro-separador" />
 
-                <p className="registro-titulo-form">Crear Cuenta</p>
+                <p className="registro-titulo-form">Crea tu Cuenta</p>
 
                 <form className="registro-formulario" onSubmit={handleSubmit} id="formulario-registro">
                     {errorMensaje && (
@@ -149,9 +147,9 @@ const Registro = () => {
                         id="boton-registrarse"
                         type="submit"
                         className="boton-principal"
-                        disabled={cargando || !!exitoMensaje}
+                        disabled={!!exitoMensaje}
                     >
-                        {cargando ? 'Registrando...' : 'Crear cuenta'}
+                        Crear cuenta
                     </button>
                 </form>
 
