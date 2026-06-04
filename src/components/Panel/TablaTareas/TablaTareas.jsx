@@ -1,17 +1,18 @@
 import { useState } from "react";
 import ItemTarea from "./ItemTarea"
 import AgregarTarea from "./AgregarTarea";
-
+import { useAuth } from "../../../context/AuthContext";
 
 import "./TablaTareas.css"
 
 const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
+    const { usuarioActual, actualizarDatosUsuario } = useAuth();
+
     const agregarTarea = (nuevaTarea) => {
 
         const tareasActualizadas = [...tareas, nuevaTarea];
-        localStorage.setItem("tareas", JSON.stringify(tareasActualizadas));
         setTareas(tareasActualizadas);
-
+        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
         const existeMiembro = miembros.some(m => m.email === nuevaTarea.asignado);
 
         if (!existeMiembro && nuevaTarea.asignado !== "Todos") {
@@ -30,8 +31,8 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
         const tareasActualizadas = tareas.map(tarea =>
             tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
         );
-        localStorage.setItem("tareas", JSON.stringify(tareasActualizadas));
         setTareas(tareasActualizadas);
+        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
 
     };
     const completasCount = tareas.filter(t => t.check).length;

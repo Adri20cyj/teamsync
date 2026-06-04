@@ -2,24 +2,26 @@ import { useState } from "react";
 import "./Recursos.css"
 import AgregarRecurso from "./AgregarRecurso"
 import ItemRecurso from "./ItemRecurso"
+import { useAuth } from "../../../context/AuthContext";
 
 
 const Recursos = () => {
 
-    const recursosGuardados = localStorage.getItem("recursos");
-    const [recursos, setRecursos] = useState(JSON.parse(recursosGuardados) || []);
+    const { usuarioActual, actualizarDatosUsuario } = useAuth();
+
+    const [recursos, setRecursos] = useState(usuarioActual?.recursos || []);
 
     const agregarRecurso = (nuevoRecurso) => {
         const recursosActualizados = [...recursos, nuevoRecurso];
         localStorage.setItem("recursos", JSON.stringify(recursosActualizados));
         setRecursos(recursosActualizados);
+        actualizarDatosUsuario(usuarioActual?.tareas || [], recursosActualizados);
     };
 
     const eliminarRecurso = (id) => {
         const recursosActualizados = recursos.filter(recurso => recurso.id !== id);
-        localStorage.setItem("recursos", JSON.stringify(recursosActualizados));
         setRecursos(recursosActualizados);
-
+        actualizarDatosUsuario(usuarioActual?.tareas || [], recursosActualizados);
     }
 
 

@@ -5,12 +5,13 @@ import Recursos from "./Recursos/Recursos"
 import TablaTareas from "./TablaTareas/TablaTareas"
 import "./Panel.css"
 import DashboardRendimiento from "./DashboardRendimiento/DashboardRendimiento"
+import { useAuth } from "../../context/AuthContext";
 
 const Panel = ({ onVolver, proyecto }) => {
+    const { usuarioActual } = useAuth();
     const [pestanaActiva, setPestanaActiva] = useState('tareas');
 
-    const tareasGuardadas = localStorage.getItem("tareas");
-    const [tareas, setTareas] = useState(JSON.parse(tareasGuardadas) || []);
+    const [tareas, setTareas] = useState(usuarioActual?.tareas || []);
 
     const [miembros, setMiembros] = useState([ /*prueba*/
         { id: 1, email: 'angie@universidad.edu.pe' },
