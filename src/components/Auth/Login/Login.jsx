@@ -12,21 +12,26 @@ const Login = () => {
         contrasena: ''
     });
     const [errorMensaje, setErrorMensaje] = useState('');
+    const [cargando, setCargando] = useState(false);
 
     const handleCambio = (e) => {
         setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value });
         setErrorMensaje('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!datosFormulario.email || !datosFormulario.contrasena) {
             setErrorMensaje('Por favor completa todos los campos.');
             return;
         }
         
-        // Ejecución sincrónica inmediata
+        setCargando(true);
+        // Espera asíncrona controlada
+        await new Promise(r => setTimeout(r, 300));
+        
         const resultado = login(datosFormulario.email, datosFormulario.contrasena);
+        setCargando(false);
 
         if (resultado.exito) {
             // Redirige según el tipo de sesión detectado
@@ -92,8 +97,9 @@ const Login = () => {
                         id="boton-iniciar-sesion"
                         type="submit"
                         className="boton-principal"
+                        disabled={cargando}
                     >
-                        Entrar
+                        {cargando ? 'Verificando...' : 'Entrar'}
                     </button>
                 </form>
 

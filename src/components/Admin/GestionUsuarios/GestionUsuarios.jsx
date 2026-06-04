@@ -8,8 +8,9 @@ const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
     const [nuevaContrasena, setNuevaContrasena] = useState('');
     const [confirmar, setConfirmar] = useState('');
     const [errorModal, setErrorModal] = useState('');
+    const [procesando, setProcesando] = useState(false);
 
-    const handleGuardar = () => {
+    const handleGuardar = async () => {
         if (!nuevaContrasena || !confirmar) {
             setErrorModal('Completa ambos campos.');
             return;
@@ -22,7 +23,11 @@ const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
             setErrorModal('Las contraseñas no coinciden.');
             return;
         }
+        
+        setProcesando(true);
+        await new Promise(r => setTimeout(r, 200));
         onGuardar(usuario.id, nuevaContrasena);
+        setProcesando(false);
         onCerrar();
     };
 
@@ -59,11 +64,11 @@ const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
                 </div>
 
                 <div className="modal-acciones">
-                    <button className="boton-cancelar-modal" onClick={onCerrar} id="boton-cancelar-modal-pass">
+                    <button className="boton-cancelar-modal" onClick={onCerrar} id="boton-cancelar-modal-pass" disabled={procesando}>
                         Cancelar
                     </button>
-                    <button className="boton-guardar-modal" onClick={handleGuardar} id="boton-guardar-nueva-pass">
-                        Guardar cambios
+                    <button className="boton-guardar-modal" onClick={handleGuardar} id="boton-guardar-nueva-pass" disabled={procesando}>
+                        {procesando ? 'Guardando...' : 'Guardar cambios'}
                     </button>
                 </div>
             </div>
@@ -85,7 +90,9 @@ const GestionUsuarios = () => {
         navegar('/admin/login');
     };
 
-    const handleToggleEstado = (idUsuario) => {
+    const handleToggleEstado = async (idUsuario) => {
+        // La asincronía previene colisiones visuales al renderizar listas basadas en el mismo contexto
+        await new Promise(r => setTimeout(r, 100));
         toggleEstadoUsuario(idUsuario);
         setContador(c => c + 1);
     };

@@ -16,6 +16,7 @@ const Registro = () => {
     });
     const [errorMensaje, setErrorMensaje] = useState('');
     const [exitoMensaje, setExitoMensaje] = useState('');
+    const [cargando, setCargando] = useState(false);
 
     const handleCambio = (e) => {
         setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value });
@@ -39,7 +40,7 @@ const Registro = () => {
         return null;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const errorValidacion = validar();
         if (errorValidacion) {
@@ -49,6 +50,12 @@ const Registro = () => {
         setCargando(true);
         await new Promise(r => setTimeout(r, 400));
         
+<<<<<<< HEAD
+        setCargando(true);
+        // Procesamiento asíncrono que previene bloqueos en la interfaz de React
+        await new Promise(r => setTimeout(r, 400));
+        
+=======
         const storedMiembros = localStorage.getItem("miembros");
         const miembrosActuales = JSON.parse(storedMiembros) || [];
 
@@ -64,7 +71,9 @@ const Registro = () => {
         
         localStorage.setItem("usuarioActivo", datosFormulario.email);
 
+>>>>>>> e74503ef9a47f816ea0ed0b8f5fea109013a04ea
         const resultado = registrarUsuario(datosFormulario);
+        setCargando(false);
 
         if (resultado.exito) {
             setExitoMensaje('¡Cuenta creada con éxito! Redirigiendo al inicio de sesión...');
@@ -164,9 +173,9 @@ const Registro = () => {
                         id="boton-registrarse"
                         type="submit"
                         className="boton-principal"
-                        disabled={!!exitoMensaje}
+                        disabled={cargando || !!exitoMensaje}
                     >
-                        Crear cuenta
+                        {cargando ? 'Registrando...' : 'Crear cuenta'}
                     </button>
                 </form>
 
