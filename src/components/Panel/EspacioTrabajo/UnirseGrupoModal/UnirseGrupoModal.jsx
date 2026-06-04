@@ -12,7 +12,7 @@ const UnirseGrupoModal = ({
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content modal-unirse">
+            <div className="modal-unirse">
                 <div className="modal-header">
                     <div className="unirse-titulo-container">
                         <div className="proyecto-icon-wrapper unirse-icon-wrapper">

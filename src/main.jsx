@@ -10,8 +10,13 @@ import RegistroPage from './pages/RegistroPage.jsx'
 import PerfilPage from './pages/PerfilPage.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminUsuariosPage from './pages/AdminUsuariosPage.jsx'
+<<<<<<< HEAD
 import recursosData from './data/recursos.js'
 import miembrosData from './data/miembros.js'
+=======
+import miembrosData from './data/miembros.js'
+
+>>>>>>> e74503ef9a47f816ea0ed0b8f5fea109013a04ea
 const router = createBrowserRouter([
   {
     path: '/',
@@ -42,7 +47,6 @@ const router = createBrowserRouter([
     element: <AdminUsuariosPage />
   },
 ])
-
 
 const onLoad = () => {
   const storedMiembros = localStorage.getItem('miembros');
