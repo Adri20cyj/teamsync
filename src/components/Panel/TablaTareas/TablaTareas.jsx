@@ -24,7 +24,7 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
             const updatedMiembros = [...miembros, nuevoMiembro];
             setMiembros(updatedMiembros);
             localStorage.setItem("miembros", JSON.stringify(updatedMiembros));
-        }
+        }    
 
 
     };
