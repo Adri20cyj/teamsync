@@ -11,7 +11,7 @@ import PerfilPage from './pages/PerfilPage.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminUsuariosPage from './pages/AdminUsuariosPage.jsx'
 import recursosData from './data/recursos.js'
-
+import miembrosData from './data/miembros.js'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -45,15 +45,12 @@ const router = createBrowserRouter([
 
 
 const onLoad = () => {
-  const recursosGuardados = localStorage.getItem("recursos");
-  if (!recursosGuardados) {
-    localStorage.setItem("recursos", JSON.stringify(recursosData));
-  }
-  const tareasGuardadas = localStorage.getItem("tareas");
-  if (!tareasGuardadas) {
-    localStorage.setItem("tareas", JSON.stringify(tareasData));
+  const storedMiembros = localStorage.getItem('miembros');
+  if (!storedMiembros) {
+    localStorage.setItem('miembros', JSON.stringify(miembrosData));
   }
 }
+onLoad();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

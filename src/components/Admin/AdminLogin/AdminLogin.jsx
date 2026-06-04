@@ -12,21 +12,26 @@ const AdminLogin = () => {
         contrasena: ''
     });
     const [errorMensaje, setErrorMensaje] = useState('');
+    const [cargando, setCargando] = useState(false);
 
     const handleCambio = (e) => {
         setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value });
         setErrorMensaje('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!datosFormulario.email || !datosFormulario.contrasena) {
             setErrorMensaje('Por favor completa todos los campos.');
             return;
         }
 
-        // Verificación sincrónica directa en la memoria local
+        setCargando(true);
+        // Pausa de asincronía para estabilizar el estado de carga en React
+        await new Promise(r => setTimeout(r, 300));
+        
         const resultado = iniciarSesionAdmin(datosFormulario.email, datosFormulario.contrasena);
+        setCargando(false);
 
         if (resultado.exito) {
             navegar('/admin/usuarios');
@@ -55,7 +60,7 @@ const AdminLogin = () => {
                     )}
 
                     <div className="campo-formulario">
-                        <label htmlFor="email-admin-login">Correo administrador</label>
+                        <label htmlFor="email-admin-login">Correo electrónico</label>
                         <input
                             id="email-admin-login"
                             type="email"
@@ -84,8 +89,9 @@ const AdminLogin = () => {
                         id="boton-iniciar-sesion-admin"
                         type="submit"
                         className="boton-principal admin"
+                        disabled={cargando}
                     >
-                        Ingresar al Panel
+                        {cargando ? 'Verificando...' : 'Ingresar al Panel'}
                     </button>
                 </form>
 

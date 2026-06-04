@@ -13,11 +13,8 @@ const Panel = ({ onVolver, proyecto }) => {
 
     const [tareas, setTareas] = useState(usuarioActual?.tareas || []);
 
-    const [miembros, setMiembros] = useState([ /*prueba*/
-        { id: 1, email: 'angie@universidad.edu.pe' },
-        { id: 2, email: 'juan@universidad.edu.pe' },
-        { id: 3, email: 'maria@universidad.edu.pe' }
-    ]);
+    const storedMiembros = localStorage.getItem('miembros');
+    const [miembros, setMiembros] = useState(JSON.parse(storedMiembros) || []);
 
     const tareasCompletas = tareas.filter(tarea => tarea.check);
 
