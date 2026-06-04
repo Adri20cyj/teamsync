@@ -5,14 +5,15 @@ import { useAuth } from "../../../context/AuthContext";
 
 import "./TablaTareas.css"
 
-const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
-    const { usuarioActual, actualizarDatosUsuario } = useAuth();
-
+const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
+    const { usuarioActual, actualizarContenidoProyecto } = useAuth();
+    const [tareas, setTareas] = useState(proyecto?.tareas || []);
     const agregarTarea = (nuevaTarea) => {
-
         const tareasActualizadas = [...tareas, nuevaTarea];
         setTareas(tareasActualizadas);
-        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
+        const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
+
+        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
         const existeMiembro = miembros.some(m => m.email === nuevaTarea.asignado);
 
         if (!existeMiembro && nuevaTarea.asignado !== "Todos") {
@@ -20,11 +21,11 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
                 id: miembros.length + 1,
                 email: nuevaTarea.asignado
             };
-            
+
             const updatedMiembros = [...miembros, nuevoMiembro];
             setMiembros(updatedMiembros);
             localStorage.setItem("miembros", JSON.stringify(updatedMiembros));
-        }    
+        }
 
 
     };
@@ -35,7 +36,8 @@ const TablaTareas = ({ tareas, setTareas, miembros = [], setMiembros }) => {
             tarea.id === id ? { ...tarea, check: !tarea.check, estaTerminada: !tarea.check } : tarea
         );
         setTareas(tareasActualizadas);
-        actualizarDatosUsuario(tareasActualizadas, usuarioActual?.recursos || []);
+        const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
+        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
 
     };
     const completasCount = tareas.filter(t => t.check).length;

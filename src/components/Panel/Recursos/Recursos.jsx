@@ -5,23 +5,24 @@ import ItemRecurso from "./ItemRecurso"
 import { useAuth } from "../../../context/AuthContext";
 
 
-const Recursos = () => {
-
-    const { usuarioActual, actualizarDatosUsuario } = useAuth();
-
-    const [recursos, setRecursos] = useState(usuarioActual?.recursos || []);
+const Recursos = ({ proyecto }) => {
+    const { usuarioActual, actualizarContenidoProyecto } = useAuth();
+    const [recursos, setRecursos] = useState(proyecto?.recursos || []);
 
     const agregarRecurso = (nuevoRecurso) => {
+
         const recursosActualizados = [...recursos, nuevoRecurso];
-        localStorage.setItem("recursos", JSON.stringify(recursosActualizados));
         setRecursos(recursosActualizados);
-        actualizarDatosUsuario(usuarioActual?.tareas || [], recursosActualizados);
+
+        const tareasActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.tareas || [];
+        actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
     };
 
     const eliminarRecurso = (id) => {
-        const recursosActualizados = recursos.filter(recurso => recurso.id !== id);
         setRecursos(recursosActualizados);
-        actualizarDatosUsuario(usuarioActual?.tareas || [], recursosActualizados);
+        const tareasActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.tareas || [];
+        actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
+
     }
 
 

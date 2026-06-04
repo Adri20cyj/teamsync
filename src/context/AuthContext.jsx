@@ -37,8 +37,7 @@ export const AuthProvider = ({ children }) => {
             contrasena: datosUsuario.contrasena,
             activo: true,
             fechaRegistro: new Date().toLocaleDateString('es-ES'),
-            tareas: [],
-            recursos: []
+            proyectos: []
         };
         const usuariosActualizados = [...usuarios, nuevoUsuario];
         localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
@@ -54,41 +53,55 @@ export const AuthProvider = ({ children }) => {
         const usuario = usuarios.find(u => u.email.toLowerCase() === emailLimpio && u.contrasena === contraseneLimpia);
         if (!usuario) return { exito: false, mensaje: 'Correo o contraseña incorrectos.' };
         if (!usuario.activo) return { exito: false, mensaje: 'Tu cuenta está desactivada. Contacta al administrador.' };
-        
-        const sesion = { id: usuario.id, 
-                        nombre: usuario.nombre, 
-                        apellido: usuario.apellido, 
-                        email: usuario.email, 
-                        fechaRegistro: usuario.fechaRegistro,
-                        tareas: usuario.tareas || [],
-                        recursos: usuario.recursos || [] };
+
+        const sesion = {
+            id: usuario.id,
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            email: usuario.email,
+            fechaRegistro: usuario.fechaRegistro,
+            proyectos: usuario.proyectos || []
+        };
         setUsuarioActual(sesion);
         localStorage.setItem('usuarioActual', JSON.stringify(sesion));
         return { exito: true };
     };
 
-    // 3. ACTUALIZAR DATOS (Solo maneja tareas y recursos)
-    const actualizarDatosUsuario = (nuevasTareas, nuevosRecursos) => {
+
+    const actualizarContenidoProyecto = (proyectoId, nuevasTareas, nuevosRecursos) => {
+        if (!usuarioActual || !usuarioActual.proyectos) return;
+
+        // 1. Recorremos los proyectos del usuario y modificamos SOLO el proyecto actual
+        const proyectosActualizados = usuarioActual.proyectos.map(p => {
+            if (p.id === proyectoId) {
+                return {
+                    ...p,
+                    tareas: nuevasTareas,
+                    recursos: nuevosRecursos
+                };
+            }
+            return p; // Los demás proyectos se quedan intactos
+        });
+
+        // 2. Usamos tu función existente para guardar el bloque completo de proyectos
+        actualizarProyectosUsuario(proyectosActualizados);
+    };
+
+    const actualizarProyectosUsuario = (nuevosProyectos) => {
         if (!usuarioActual) return;
 
+        // 1. Actualizar en la lista maestra de todos los usuarios
         const usuarios = obtenerUsuarios();
         const usuariosActualizados = usuarios.map(u => {
             if (u.id === usuarioActual.id) {
-                return { 
-                    ...u, 
-                    tareas: nuevasTareas, 
-                    recursos: nuevosRecursos 
-                };
+                return { ...u, proyectos: nuevosProyectos };
             }
             return u;
         });
         localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
 
-        const sesionActualizada = { 
-            ...usuarioActual, 
-            tareas: nuevasTareas, 
-            recursos: nuevosRecursos 
-        };
+        // 2. Actualizar la sesión activa
+        const sesionActualizada = { ...usuarioActual, proyectos: nuevosProyectos };
         setUsuarioActual(sesionActualizada);
         localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
     };
@@ -167,7 +180,8 @@ export const AuthProvider = ({ children }) => {
             obtenerUsuarios,
             toggleEstadoUsuario,
             cambiarContrasenaUsuario,
-            actualizarDatosUsuario
+            actualizarProyectosUsuario,
+            actualizarContenidoProyecto
         }}>
             {children}
         </AuthContext.Provider>

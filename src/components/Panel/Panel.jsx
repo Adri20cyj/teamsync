@@ -11,7 +11,11 @@ const Panel = ({ onVolver, proyecto }) => {
     const { usuarioActual } = useAuth();
     const [pestanaActiva, setPestanaActiva] = useState('tareas');
 
-    const [tareas, setTareas] = useState(usuarioActual?.tareas || []);
+    // 1. CAMBIO CRÍTICO: Buscamos el proyecto fresco directamente desde el usuario activo
+    const proyectoSincronizado = usuarioActual?.proyectos?.find(p => p.id === proyecto.id) || proyecto;
+
+    // 2. Extraemos las tareas directo del proyecto sincronizado (SIN useState)
+    const tareas = proyectoSincronizado?.tareas || [];
 
     const storedMiembros = localStorage.getItem('miembros');
     const [miembros, setMiembros] = useState(JSON.parse(storedMiembros) || []);
@@ -23,18 +27,31 @@ const Panel = ({ onVolver, proyecto }) => {
             <Header setPestanaActiva={setPestanaActiva} onVolver={onVolver} />
             <main>
                 <section className="panel-tareas">
-                    <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyecto} tareas={tareas} tareasCompletas={tareasCompletas} />
+                    <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyectoSincronizado} tareas={tareas} tareasCompletas={tareasCompletas} />
 
-                    {pestanaActiva === 'tareas' && (<TablaTareas tareas={tareas} setTareas={setTareas} miembros={miembros} setMiembros={setMiembros} />)}
-                    {pestanaActiva === 'dashboard' && (<DashboardRendimiento pestanaActiva={pestanaActiva} tareas={tareas} miembros={miembros} setMiembros={setMiembros} />)}
+                    {pestanaActiva === 'tareas' && (
+                        <TablaTareas
+                            miembros={miembros}
+                            setMiembros={setMiembros}
+                            proyecto={proyectoSincronizado}
+                        />
+                    )}
+                    {pestanaActiva === 'dashboard' && (
+                        <DashboardRendimiento
+                            pestanaActiva={pestanaActiva}
+                            tareas={tareas}
+                            miembros={miembros}
+                            setMiembros={setMiembros}
+                        />
+                    )}
                 </section>
 
                 <section className="panel-recursos">
-                    <Recursos />
+                    <Recursos proyecto={proyectoSincronizado} />
                 </section>
             </main>
         </>
     )
 }
 
-export default Panel
+export default Panel;

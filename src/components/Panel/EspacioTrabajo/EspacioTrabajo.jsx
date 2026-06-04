@@ -1,27 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 import "./EspacioTrabajo.css";
 import { PlusIcon, UserIcon } from "./Icons/Icons";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
+import { useEffect } from "react"; //  ¡Listo!
 
-const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
-    const [proyectos, setProyectos] = useState([
-        {
-            id: 2,
-            title: "Desarrollo Web",
-            tag: "PROG-WEB",
-            description: "Creación de la plataforma TeamSync",
-            progress: 60,
-            tasksCompleted: 3,
-            tasksTotal: 5,
-            membersCount: 3,
-            startDate: "15 mar",
-            endDate: "20 jun",
-            iconType: "code"
-        },
-    ]);
+
+const EspacioTrabajo = ({ onSelectProyecto }) => {
+    const { usuarioActual, actualizarProyectosUsuario } = useAuth(); // <-- 2. Consumimos el contexto
+
+    // 3. El estado inicial ahora carga los proyectos del usuario logueado (o vacio si no tiene ninguno)
+    const [proyectos, setProyectos] = useState(usuarioActual?.proyectos || []);
 
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarUnirseModal, setMostrarUnirseModal] = useState(false);
@@ -36,6 +28,12 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
         startDate: "",
         endDate: ""
     });
+
+    useEffect(() => {
+        if (usuarioActual) {
+            actualizarProyectosUsuario(proyectos);
+        }
+    }, [proyectos]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -73,7 +71,9 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
             membersCount: parseInt(nuevoProyecto.membersCount) || 1,
             startDate: formatReadableDate(nuevoProyecto.startDate) || "Hoy",
             endDate: formatReadableDate(nuevoProyecto.endDate) || "Por definir",
-            iconType: nuevoProyecto.iconType
+            iconType: nuevoProyecto.iconType,
+            tareas: [],   // <-- Exclusivo de este nuevo proyecto
+            recursos: []  // <-- Exclusivo de este nuevo proyecto
         };
 
         setProyectos([...proyectos, project]);
@@ -107,7 +107,9 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
             membersCount: 2,
             startDate: todayStr,
             endDate: "Por definir",
-            iconType: "education"
+            iconType: "education",
+            tareas: [],   // <-- Vacío para empezar
+            recursos: []  // <-- Vacío para empezar
         };
 
         setProyectos([...proyectos, project]);
