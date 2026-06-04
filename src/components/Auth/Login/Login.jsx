@@ -105,6 +105,12 @@ const Login = () => {
                             Regístrate aquí
                         </Link>
                     </p>
+                    <p>
+                        ¿Eres administrador?{' '}
+                        <Link to="/admin/login" className="enlace-accion" id="ir-registro-admin">
+                            Click aquí
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div>
