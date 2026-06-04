@@ -10,7 +10,6 @@ import RegistroPage from './pages/RegistroPage.jsx'
 import PerfilPage from './pages/PerfilPage.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminUsuariosPage from './pages/AdminUsuariosPage.jsx'
-import recursosData from './data/recursos.js'
 
 const router = createBrowserRouter([
   {
@@ -43,17 +42,6 @@ const router = createBrowserRouter([
   },
 ])
 
-
-const onLoad = () => {
-  const recursosGuardados = localStorage.getItem("recursos");
-  if (!recursosGuardados) {
-    localStorage.setItem("recursos", JSON.stringify(recursosData));
-  }
-  const tareasGuardadas = localStorage.getItem("tareas");
-  if (!tareasGuardadas) {
-    localStorage.setItem("tareas", JSON.stringify(tareasData));
-  }
-}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
