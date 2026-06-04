@@ -8,7 +8,7 @@
     color: #f7fafc;
 }
 
-.espacio-trabajo-header {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -94,16 +94,7 @@
     animation: fadeIn 0.25s ease;
 }
 
-.modal-content {
-    background-color: #0c071d;
-    border: 1px solid rgba(124, 109, 242, 0.2);
-    border-radius: 24px;
-    width: 90%;
-    max-width: 550px;
-    padding: 2.2rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(124, 109, 242, 0.1);
-    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+
 
 .modal-header {
     display: flex;
@@ -321,7 +312,14 @@
 
 /* Unirse Modal Styling */
 .modal-unirse {
-    max-width: 500px !important;
+    background-color: #0c071d;
+    border: 1px solid rgba(124, 109, 242, 0.2);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 550px;
+    padding: 2.2rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(124, 109, 242, 0.1);
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .unirse-titulo-container {
@@ -406,4 +404,4 @@
     color: #ffffff;
     letter-spacing: 0.02em;
     line-height: 1;
-}
+}

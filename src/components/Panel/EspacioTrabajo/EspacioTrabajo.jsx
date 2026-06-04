@@ -58,8 +58,8 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
         e.preventDefault();
         if (!nuevoProyecto.title) return;
 
-        const projectTag = nuevoProyecto.tag 
-            ? nuevoProyecto.tag.toUpperCase() 
+        const projectTag = nuevoProyecto.tag
+            ? nuevoProyecto.tag.toUpperCase()
             : (nuevoProyecto.title ? nuevoProyecto.title.split(' ').map(w => w[0]).join('').slice(0, 5).toUpperCase() : "GRUPO");
 
         const project = {
@@ -122,7 +122,7 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
 
     return (
         <div className="espacio-trabajo-container">
-            <div className="espacio-trabajo-header">
+            <header>
                 <div className="header-text-container">
                     <h1 className="proyectos-titulo">Tus Proyectos</h1>
                     <p className="proyectos-subtitulo">
@@ -145,7 +145,7 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual }) => {
                         </Link>
                     )}
                 </div>
-            </div>
+            </header>
 
             <div className="proyectos-divider"></div>
 
