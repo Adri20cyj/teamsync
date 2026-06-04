@@ -31,6 +31,7 @@ const Login = () => {
         setCargando(false);
         if (resultado.exito) {
             // Redirige según el tipo de sesión detectado
+            localStorage.setItem("usuarioActivo", datosFormulario.email);
             if (resultado.tipo === 'admin') {
                 navegar('/admin/usuarios');
             } else {
