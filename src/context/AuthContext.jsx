@@ -36,7 +36,9 @@ export const AuthProvider = ({ children }) => {
             email: datosUsuario.email,
             contrasena: datosUsuario.contrasena,
             activo: true,
-            fechaRegistro: new Date().toLocaleDateString('es-ES')
+            fechaRegistro: new Date().toLocaleDateString('es-ES'),
+            tareas: [],
+            recursos: []
         };
         const usuariosActualizados = [...usuarios, nuevoUsuario];
         localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
@@ -48,13 +50,47 @@ export const AuthProvider = ({ children }) => {
         const emailLimpio = email.trim().toLowerCase();
         const contraseneLimpia = contrasena.trim();
         const usuarios = obtenerUsuarios();
+
         const usuario = usuarios.find(u => u.email.toLowerCase() === emailLimpio && u.contrasena === contraseneLimpia);
         if (!usuario) return { exito: false, mensaje: 'Correo o contraseña incorrectos.' };
         if (!usuario.activo) return { exito: false, mensaje: 'Tu cuenta está desactivada. Contacta al administrador.' };
-        const sesion = { id: usuario.id, nombre: usuario.nombre, apellido: usuario.apellido, email: usuario.email, fechaRegistro: usuario.fechaRegistro };
+        
+        const sesion = { id: usuario.id, 
+                        nombre: usuario.nombre, 
+                        apellido: usuario.apellido, 
+                        email: usuario.email, 
+                        fechaRegistro: usuario.fechaRegistro,
+                        tareas: usuario.tareas || [],
+                        recursos: usuario.recursos || [] };
         setUsuarioActual(sesion);
         localStorage.setItem('usuarioActual', JSON.stringify(sesion));
         return { exito: true };
+    };
+
+    // 3. ACTUALIZAR DATOS (Solo maneja tareas y recursos)
+    const actualizarDatosUsuario = (nuevasTareas, nuevosRecursos) => {
+        if (!usuarioActual) return;
+
+        const usuarios = obtenerUsuarios();
+        const usuariosActualizados = usuarios.map(u => {
+            if (u.id === usuarioActual.id) {
+                return { 
+                    ...u, 
+                    tareas: nuevasTareas, 
+                    recursos: nuevosRecursos 
+                };
+            }
+            return u;
+        });
+        localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
+
+        const sesionActualizada = { 
+            ...usuarioActual, 
+            tareas: nuevasTareas, 
+            recursos: nuevosRecursos 
+        };
+        setUsuarioActual(sesionActualizada);
+        localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
     };
 
     // Cerrar sesión usuario
@@ -130,7 +166,8 @@ export const AuthProvider = ({ children }) => {
             cerrarSesionAdmin,
             obtenerUsuarios,
             toggleEstadoUsuario,
-            cambiarContrasenaUsuario
+            cambiarContrasenaUsuario,
+            actualizarDatosUsuario
         }}>
             {children}
         </AuthContext.Provider>
