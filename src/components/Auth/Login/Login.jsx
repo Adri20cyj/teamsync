@@ -29,6 +29,8 @@ const Login = () => {
         const resultado = login(datosFormulario.email, datosFormulario.contrasena);
 
         if (resultado.exito) {
+            // Redirige según el tipo de sesión detectado
+            localStorage.setItem("usuarioActivo", datosFormulario.email);
             if (resultado.tipo === 'admin') {
                 navegar('/admin/usuarios');
             } else {
