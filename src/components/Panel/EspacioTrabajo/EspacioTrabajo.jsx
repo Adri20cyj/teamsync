@@ -6,13 +6,11 @@ import { PlusIcon, UserIcon } from "./Icons/Icons";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
-import { useEffect } from "react"; //  ¡Listo!
-
+import { useEffect } from "react";
 
 const EspacioTrabajo = ({ onSelectProyecto }) => {
-    const { usuarioActual, actualizarProyectosUsuario } = useAuth(); // <-- 2. Consumimos el contexto
+    const { usuarioActual, actualizarProyectosUsuario } = useAuth();
 
-    // 3. El estado inicial ahora carga los proyectos del usuario logueado (o vacio si no tiene ninguno)
     const [proyectos, setProyectos] = useState(usuarioActual?.proyectos || []);
 
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -72,8 +70,8 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
             startDate: formatReadableDate(nuevoProyecto.startDate) || "Hoy",
             endDate: formatReadableDate(nuevoProyecto.endDate) || "Por definir",
             iconType: nuevoProyecto.iconType,
-            tareas: [],   // <-- Exclusivo de este nuevo proyecto
-            recursos: []  // <-- Exclusivo de este nuevo proyecto
+            tareas: [],
+            recursos: []
         };
 
         setProyectos([...proyectos, project]);
@@ -108,8 +106,8 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
             startDate: todayStr,
             endDate: "Por definir",
             iconType: "education",
-            tareas: [],   // <-- Vacío para empezar
-            recursos: []  // <-- Vacío para empezar
+            tareas: [],
+            recursos: []
         };
 
         setProyectos([...proyectos, project]);
