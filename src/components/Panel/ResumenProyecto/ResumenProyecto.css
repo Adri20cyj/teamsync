@@ -55,7 +55,8 @@
 }
 
 .fecha-inicio,
-.fecha-final {
+.fecha-final,
+.proyecto-id {
     align-self: center;
     display: inline-flex;
     align-items: center;

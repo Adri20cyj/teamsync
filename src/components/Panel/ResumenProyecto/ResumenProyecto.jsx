@@ -16,6 +16,7 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
                 <div className="curso">{tag}</div>
                 <div className="fecha-inicio">Inicio: {startDate}</div>
                 <div className="fecha-final">Fin: {endDate}</div>
+                {proyecto?.id && <div className="proyecto-id">ID: {proyecto.id}</div>}
             </div>
 
             <div className="resumen-nombre">
