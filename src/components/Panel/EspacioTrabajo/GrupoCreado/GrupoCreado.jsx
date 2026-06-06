@@ -15,6 +15,10 @@ const GrupoCreado = ({ proyecto, onSelectProyecto }) => {
         }
     };
 
+    const totalTareas = proyecto.tareas ? proyecto.tareas.length : (proyecto.tasksTotal || 0);
+    const tareasCompletadas = proyecto.tareas ? proyecto.tareas.filter(t => t.check).length : (proyecto.tasksCompleted || 0);
+    const progreso = totalTareas > 0 ? Math.round((tareasCompletadas / totalTareas) * 100) : (proyecto.progress || 0);
+
     return (
         <div className="proyecto-card">
             <div className="proyecto-card-header">
@@ -43,13 +47,13 @@ const GrupoCreado = ({ proyecto, onSelectProyecto }) => {
                 <div className="logros-labels">
                     <span className="logros-titulo">LOGROS DEL EQUIPO</span>
                     <span className="logros-valor">
-                        {proyecto.progress}% ({proyecto.tasksCompleted}/{proyecto.tasksTotal})
+                        {progreso}% ({tareasCompletadas}/{totalTareas})
                     </span>
                 </div>
                 <div className="progreso-barra-track">
                     <div
                         className="progreso-barra-fill"
-                        style={{ width: `${proyecto.progress}%` }}
+                        style={{ width: `${progreso}%` }}
                     ></div>
                 </div>
             </div>
