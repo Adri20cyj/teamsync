@@ -74,16 +74,10 @@ export const AuthProvider = ({ children }) => {
         // 1. Recorremos los proyectos del usuario y modificamos SOLO el proyecto actual
         const proyectosActualizados = usuarioActual.proyectos.map(p => {
             if (p.id === proyectoId) {
-                const totalTareas = nuevasTareas.length;
-                const tareasCompletas = nuevasTareas.filter(t => t.check).length;
-                const progreso = totalTareas > 0 ? Math.round((tareasCompletas / totalTareas) * 100) : 0;
                 return {
                     ...p,
                     tareas: nuevasTareas,
-                    recursos: nuevosRecursos,
-                    tasksTotal: totalTareas,
-                    tasksCompleted: tareasCompletas,
-                    progress: progreso
+                    recursos: nuevosRecursos
                 };
             }
             return p; // Los demás proyectos se quedan intactos
