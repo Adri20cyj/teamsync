@@ -1,13 +1,16 @@
 .proyecto-card {
     background-color: #0c071d;
     border: 1px solid rgba(124, 109, 242, 0.12);
-    border-radius: 28px;
-    padding: 2.2rem;
+    border-radius: 20px;
+    padding: 1.4rem;
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
     box-shadow: 0 8px 32px rgba(5, 1, 13, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    min-width: 0;
 }
 
 .proyecto-card:hover {
@@ -20,19 +23,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .proyecto-icon-wrapper {
     background-color: #17112c;
     border: 1px solid rgba(124, 109, 242, 0.15);
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #8b7eff;
+    flex-shrink: 0;
 }
 
 .ver-workspace-btn {
@@ -66,11 +70,12 @@
 .proyecto-card-titulo {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
-    font-size: 2.3rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
+    word-break: break-word;
 }
 
 .proyecto-tag-badge {
@@ -80,29 +85,33 @@
     background-color: #17112c;
     border: 1px solid rgba(124, 109, 242, 0.2);
     color: #8b7eff;
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     width: fit-content;
-    margin-bottom: 1.4rem;
+    margin-bottom: 0.9rem;
 }
 
 .proyecto-card-desc {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     color: #a29ebc;
-    line-height: 1.55;
-    margin-bottom: 1.8rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
     flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .proyecto-logros-seccion {
     background: rgba(13, 8, 28, 0.4);
     border: 1px solid rgba(124, 109, 242, 0.08);
-    border-radius: 18px;
-    padding: 1.1rem 1.4rem;
-    margin-bottom: 1.6rem;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
 }
 
 .logros-labels {
@@ -142,11 +151,11 @@
 .proyecto-card-divider {
     height: 1px;
     background-color: rgba(124, 109, 242, 0.12);
-    margin-bottom: 1.4rem;
+    margin-bottom: 0.8rem;
     border: none;
 }
 
-footer {
+.proyecto-card footer {
     display: flex;
     justify-content: space-between;
     align-items: center;

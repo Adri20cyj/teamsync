@@ -29,7 +29,7 @@ const GrupoCreado = ({ proyecto, onSelectProyecto }) => {
                     onClick={() => onSelectProyecto && onSelectProyecto(proyecto)}
                     className="ver-workspace-btn"
                 >
-                    <span>VER PROYECTO</span>
+                    <span>WORKSPACE</span>
                     <ArrowRightIcon />
                 </button>
             </div>
@@ -45,7 +45,7 @@ const GrupoCreado = ({ proyecto, onSelectProyecto }) => {
 
             <div className="proyecto-logros-seccion">
                 <div className="logros-labels">
-                    <span className="logros-titulo">LOGROS DEL EQUIPO</span>
+                    <span className="logros-titulo">HITOS COMPLETADOS</span>
                     <span className="logros-valor">
                         {progreso}% ({tareasCompletadas}/{totalTareas})
                     </span>

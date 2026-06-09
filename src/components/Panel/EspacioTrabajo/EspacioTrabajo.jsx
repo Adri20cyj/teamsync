@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import "./EspacioTrabajo.css";
@@ -6,11 +6,12 @@ import { PlusIcon, UserIcon } from "./Icons/Icons";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
-import { useEffect } from "react";
+import CalendarioGeneral from "./CalendarioGeneral/CalendarioGeneral";
+import LineaTiempo from "./LineaTiempo/LineaTiempo";
+import Carga from "./Carga/Carga";
 
-const EspacioTrabajo = ({ onSelectProyecto }) => {
-    const { usuarioActual, actualizarProyectosUsuario } = useAuth();
-
+const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyectos", setTabActivo }) => {
+    const { actualizarProyectosUsuario } = useAuth();
     const [proyectos, setProyectos] = useState(usuarioActual?.proyectos || []);
 
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -32,6 +33,13 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
             actualizarProyectosUsuario(proyectos);
         }
     }, [proyectos]);
+
+    // Sincronizar proyectos cuando el usuarioActual cambie (ej. al agregar tareas desde panel)
+    useEffect(() => {
+        if (usuarioActual?.proyectos) {
+            setProyectos(usuarioActual.proyectos);
+        }
+    }, [usuarioActual]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -115,7 +123,7 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
         setMostrarUnirseModal(false);
     };
 
-    // Iniciales para el mini-avatar
+    // Iniciales para el avatar
     const inicialesUsuario = usuarioActual
         ? `${usuarioActual.nombre?.[0] ?? ''}${usuarioActual.apellido?.[0] ?? ''}`.toUpperCase()
         : '';
@@ -147,12 +155,64 @@ const EspacioTrabajo = ({ onSelectProyecto }) => {
                 </div>
             </header>
 
+            {/* Selector de Pestañas del Workspace */}
+            <div className="workspace-tabs-switcher">
+                <button
+                    className={`workspace-tab-btn ${tabActivo === 'proyectos' ? 'activo' : ''}`}
+                    onClick={() => setTabActivo('proyectos')}
+                >
+                    㗊 MIS PROYECTOS
+                </button>
+                <button
+                    className={`workspace-tab-btn ${tabActivo === 'calendario' ? 'activo' : ''}`}
+                    onClick={() => setTabActivo('calendario')}
+                >
+                    📅 CALENDARIO GENERAL
+                </button>
+                <button
+                    className={`workspace-tab-btn ${tabActivo === 'linea_tiempo' ? 'activo' : ''}`}
+                    onClick={() => setTabActivo('linea_tiempo')}
+                >
+                    📋 LÍNEA DEL TIEMPO
+                </button>
+                <button
+                    className={`workspace-tab-btn ${tabActivo === 'carga' ? 'activo' : ''}`}
+                    onClick={() => setTabActivo('carga')}
+                >
+                    👥 CARGA / WORKLOAD
+                </button>
+            </div>
+
             <div className="proyectos-divider"></div>
 
-            <ProyectosGrid
-                proyectos={proyectos}
-                onSelectProyecto={onSelectProyecto}
-            />
+            {/* Contenido Condicional según Pestaña */}
+            {tabActivo === 'proyectos' && (
+                <ProyectosGrid
+                    proyectos={proyectos}
+                    onSelectProyecto={onSelectProyecto}
+                />
+            )}
+
+            {tabActivo === 'calendario' && (
+                <CalendarioGeneral
+                    proyectos={proyectos}
+                    onSelectProyecto={onSelectProyecto}
+                />
+            )}
+
+            {tabActivo === 'linea_tiempo' && (
+                <LineaTiempo
+                    proyectos={proyectos}
+                    onSelectProyecto={onSelectProyecto}
+                />
+            )}
+
+            {tabActivo === 'carga' && (
+                <Carga
+                    proyectos={proyectos}
+                    onSelectProyecto={onSelectProyecto}
+                />
+            )}
 
             <CrearProyectoModal
                 mostrarModal={mostrarModal}

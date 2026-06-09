@@ -23,9 +23,9 @@ const Panel = ({ onVolver, proyecto }) => {
     const tareasCompletas = tareas.filter(tarea => tarea.check);
 
     return (
-        <>
+        <div className="panel-wrapper">
             <Header setPestanaActiva={setPestanaActiva} onVolver={onVolver} />
-            <main>
+            <div className="panel-body">
                 <section className="panel-tareas">
                     <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyectoSincronizado} tareas={tareas} tareasCompletas={tareasCompletas} />
 
@@ -49,8 +49,8 @@ const Panel = ({ onVolver, proyecto }) => {
                 <section className="panel-recursos">
                     <Recursos proyecto={proyectoSincronizado} />
                 </section>
-            </main>
-        </>
+            </div>
+        </div>
     )
 }
 

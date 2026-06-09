@@ -1,0 +1,169 @@
+/* ==========================================
+   CALENDARIO GENERAL LIST
+   ========================================== */
+.workspace-tab-content {
+    animation: fadeIn 0.3s ease;
+}
+
+.workspace-section-header {
+    margin-bottom: 24px;
+}
+
+.workspace-section-header h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: white;
+    margin: 0 0 6px 0;
+}
+
+.workspace-section-header p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #8c86a6;
+    margin: 0;
+}
+
+.calendario-general-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calendario-tarea-row {
+    background-color: #0d0717;
+    border: 1px solid rgba(124, 109, 242, 0.08);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 20px;
+}
+
+.calendario-tarea-row:hover {
+    background-color: #120a26;
+    transform: translateX(4px);
+    border-color: rgba(124, 109, 242, 0.25);
+    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.1);
+}
+
+.calendario-tarea-row.completa {
+    opacity: 0.5;
+}
+
+.calendario-tarea-row.completa h4 {
+    text-decoration: line-through;
+    color: #8c86a6;
+}
+
+.prioridad-border-alta { border-left: 4px solid #ff4d6d; }
+.prioridad-border-media { border-left: 4px solid #f39c12; }
+.prioridad-border-baja { border-left: 4px solid #3498db; }
+
+.calendario-tarea-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.calendario-project-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #8b7eff;
+    background-color: rgba(139, 126, 255, 0.1);
+    border: 1px solid rgba(139, 126, 255, 0.25);
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.calendario-tarea-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.calendario-tarea-info h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calendario-tarea-info span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #8c86a6;
+}
+
+.calendario-tarea-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.calendario-prioridad {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.prioridad-alta { background-color: rgba(255, 77, 109, 0.15); color: #ff4d6d; }
+.prioridad-media { background-color: rgba(243, 156, 18, 0.15); color: #f39c12; }
+.prioridad-baja { background-color: rgba(52, 152, 219, 0.15); color: #3498db; }
+
+.calendario-fecha {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: #8c86a6;
+    background-color: rgba(139, 126, 255, 0.08);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.calendario-responsable {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: #ffffff;
+    background-color: #2b2244;
+    padding: 4px 10px;
+    border-radius: 8px;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Gantt empty state fallback */
+.gantt-empty-state {
+    padding: 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #8c86a666;
+    text-align: center;
+    font-style: italic;
+    border: 1px dashed rgba(124, 109, 242, 0.08);
+    border-radius: 16px;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

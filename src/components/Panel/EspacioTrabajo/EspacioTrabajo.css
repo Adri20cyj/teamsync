@@ -8,16 +8,24 @@
     color: #f7fafc;
 }
 
-header {
+/* Header Premium Rediseñado */
+.workspace-header-premium {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
     flex-wrap: wrap;
+    margin-bottom: 2.2rem;
 }
 
-.header-text-container {
-    flex: 1;
+.workspace-header-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #8c86a6;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 6px;
 }
 
 .proyectos-titulo {
@@ -27,7 +35,7 @@ header {
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem 0;
 }
 
 .proyectos-subtitulo {
@@ -35,6 +43,14 @@ header {
     color: #8c86a6;
     line-height: 1.6;
     max-width: 700px;
+    margin: 0;
+}
+
+.header-acciones {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .boton-crear-proyecto {
@@ -51,6 +67,9 @@ header {
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(124, 109, 242, 0.3);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    height: auto;
+    line-height: 1;
 }
 
 .boton-crear-proyecto:hover {
@@ -63,22 +82,263 @@ header {
     transform: translateY(0);
 }
 
+.boton-unirse-grupo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1px solid rgba(124, 109, 242, 0.4);
+    color: #ffffff;
+    padding: 0.85rem 1.6rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    height: auto;
+    line-height: 1;
+}
+
+.boton-unirse-grupo:hover {
+    transform: translateY(-2px);
+    background-color: rgba(124, 109, 242, 0.08);
+    border-color: rgba(124, 109, 242, 0.8);
+    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.15);
+}
+
+.boton-unirse-grupo:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   TARJETA DESTACADA: PRÓXIMA ENTREGA
+   ========================================== */
+.alerta-entrega-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0d0717;
+    border: 1px solid rgba(124, 109, 242, 0.12);
+    border-left: 5px solid #ff5722; /* Borde izquierdo destacado en naranja */
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 32px rgba(5, 1, 13, 0.8), 0 0 15px rgba(255, 87, 34, 0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.alerta-entrega-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.flama-icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 87, 34, 0.1);
+    border: 1px solid rgba(255, 87, 34, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(255, 87, 34, 0.15);
+}
+
+.flama-emoji {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.alerta-entrega-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.alerta-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tag-proxima-entrega {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #ff8a65;
+    letter-spacing: 0.05em;
+}
+
+.tag-estado-pill {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+}
+
+.carga-vencido-badge {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.carga-hoy-badge {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: #f39c12;
+    border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+.carga-futuro-badge {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.alerta-task-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: white;
+    margin: 2px 0;
+    line-height: 1.2;
+}
+
+.alerta-meta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.alerta-proyecto-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #a29ebc;
+    background-color: #17112c;
+    border: 1px solid rgba(124, 109, 242, 0.1);
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.alerta-prioridad-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #8c86a6;
+    border: 1px solid rgba(140, 134, 166, 0.3);
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+}
+
+.alerta-entrega-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btn-ir-espacio {
+    background-color: transparent;
+    border: 1px solid rgba(140, 134, 166, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    letter-spacing: 0.05em;
+}
+
+.btn-ir-espacio:hover {
+    background-color: rgba(139, 126, 255, 0.06);
+    border-color: #8b7eff;
+    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.2);
+}
+
+.btn-ir-espacio svg {
+    transition: transform 0.2s ease;
+}
+
+.btn-ir-espacio:hover svg {
+    transform: translateX(3px);
+}
+
+/* ==========================================
+   TABS SWITCHER EN WORKSPACE
+   ========================================== */
+.workspace-tabs-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #0c071d;
+    border: 1px solid rgba(124, 109, 242, 0.15);
+    border-radius: 16px;
+    padding: 6px;
+    gap: 6px;
+    width: fit-content;
+}
+
+.workspace-tab-btn {
+    background: transparent;
+    border: none;
+    color: #8c86a6;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.03em;
+}
+
+.workspace-tab-btn:hover {
+    color: white;
+    background-color: rgba(124, 109, 242, 0.06);
+}
+
+.workspace-tab-btn.activo {
+    background-color: #8b7eff;
+    color: white;
+    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.3);
+}
+
 .proyectos-divider {
     height: 1px;
     background: linear-gradient(90deg, rgba(124, 109, 242, 0.25) 0%, rgba(124, 109, 242, 0.05) 100%);
-    margin: 2.2rem 0 3rem 0;
+    margin: 1.8rem 0 2.2rem 0;
     border: none;
 }
 
+/* ==========================================
+   GRID DE PROYECTOS / GRUPOS CREADOS
+   ========================================== */
 .proyectos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 280px));
+    gap: 1.2rem;
+    align-items: stretch;
 }
 
-
-
-/* Modal Styling */
+/* ==========================================
+   MODALES (CREACIÓN Y UNIÓN)
+   ========================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -93,8 +353,6 @@ header {
     z-index: 1000;
     animation: fadeIn 0.25s ease;
 }
-
-
 
 .modal-header {
     display: flex;
@@ -217,100 +475,7 @@ header {
     box-shadow: 0 6px 15px rgba(124, 109, 242, 0.3);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        transform: scale(0.95);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .espacio-trabajo-container {
-        padding: 2rem 1.5rem;
-    }
-
-    .proyectos-titulo {
-        font-size: 2.5rem;
-    }
-
-    .espacio-trabajo-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .header-acciones {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .boton-crear-proyecto,
-    .boton-unirse-grupo {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-.header-acciones {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.boton-unirse-grupo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: transparent;
-    border: 1px solid rgba(124, 109, 242, 0.4);
-    color: #ffffff;
-    padding: 0.85rem 1.6rem;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.boton-unirse-grupo:hover {
-    transform: translateY(-2px);
-    background-color: rgba(124, 109, 242, 0.08);
-    border-color: rgba(124, 109, 242, 0.8);
-    box-shadow: 0 4px 15px rgba(124, 109, 242, 0.15);
-}
-
-.boton-unirse-grupo:active {
-    transform: translateY(0);
-}
-
-.boton-unirse-grupo svg {
-    width: 18px;
-    height: 18px;
-    stroke-width: 2;
-}
-
-/* Unirse Modal Styling */
+/* Modal Unirse */
 .modal-unirse {
     background-color: #0c071d;
     border: 1px solid rgba(124, 109, 242, 0.2);
@@ -374,7 +539,6 @@ header {
     font-weight: 700 !important;
 }
 
-/* Avatar de usuario en el header */
 .avatar-usuario-header {
     display: flex;
     align-items: center;
@@ -404,4 +568,52 @@ header {
     color: #ffffff;
     letter-spacing: 0.02em;
     line-height: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .espacio-trabajo-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .proyectos-titulo {
+        font-size: 2.5rem;
+    }
+
+    .workspace-header-premium {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-acciones {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .boton-crear-proyecto,
+    .boton-unirse-grupo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
