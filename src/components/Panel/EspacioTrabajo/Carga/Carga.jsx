@@ -52,8 +52,8 @@ const Carga = ({ proyectos = [], onSelectProyecto }) => {
 
             {/* 2. Rendimiento por Espacios */}
             <div className="rendimiento-espacios-seccion">
-                <h3 className="rendimiento-titulo">Rendimiento por Espacios (Cursos)</h3>
-                
+                <h4 className="rendimiento-titulo">Rendimiento por Grupos</h4>
+
                 <div className="carga-proyectos-list">
                     {proyectos.length === 0 ? (
                         <div className="gantt-empty-state">No hay espacios de trabajo registrados. Crea un proyecto para medir su rendimiento.</div>
@@ -64,7 +64,7 @@ const Carga = ({ proyectos = [], onSelectProyecto }) => {
                             const completadasProy = tareasProy.filter(t => t.check).length;
                             const pendientesProy = totalProy - completadasProy;
                             const porcProy = totalProy > 0 ? Math.round((completadasProy / totalProy) * 100) : 0;
-                            
+
                             // Clasificar tareas del proyecto por estado
                             let atrasadas = 0;
                             let activas = 0;
@@ -78,7 +78,7 @@ const Carga = ({ proyectos = [], onSelectProyecto }) => {
                                     sinFecha++;
                                 } else {
                                     const hoy = new Date();
-                                    hoy.setHours(0,0,0,0);
+                                    hoy.setHours(0, 0, 0, 0);
                                     const limite = new Date(t.fechaLimite + 'T00:00:00');
                                     if (isNaN(limite.getTime())) {
                                         sinFecha++;
@@ -96,8 +96,8 @@ const Carga = ({ proyectos = [], onSelectProyecto }) => {
                             const pctCompletadas = totalProy > 0 ? (completadas / totalProy) * 100 : 0;
 
                             return (
-                                <div 
-                                    key={p.id} 
+                                <div
+                                    key={p.id}
                                     className="carga-proyecto-row"
                                     onClick={() => onSelectProyecto(p)}
                                 >
@@ -106,7 +106,7 @@ const Carga = ({ proyectos = [], onSelectProyecto }) => {
                                             <div className="carga-proy-avatar">{p.title?.charAt(0).toUpperCase()}</div>
                                             <div className="carga-proy-name">
                                                 <h4>{p.title}</h4>
-                                                <span>CURSO: {p.tag || "GENERAL"}</span>
+                                                <span>Grupo: {p.tag || "GENERAL"}</span>
                                             </div>
                                         </div>
                                         <div className="carga-proy-porcentaje">

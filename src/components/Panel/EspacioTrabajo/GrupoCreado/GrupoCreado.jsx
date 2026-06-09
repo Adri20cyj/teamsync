@@ -45,7 +45,7 @@ const GrupoCreado = ({ proyecto, onSelectProyecto }) => {
 
             <div className="proyecto-logros-seccion">
                 <div className="logros-labels">
-                    <span className="logros-titulo">HITOS COMPLETADOS</span>
+                    <span className="logros-titulo">Tareas completadas</span>
                     <span className="logros-valor">
                         {progreso}% ({tareasCompletadas}/{totalTareas})
                     </span>
