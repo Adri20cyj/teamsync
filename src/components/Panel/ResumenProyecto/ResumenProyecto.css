@@ -168,3 +168,101 @@
 .boton-ir-dashboard:active {
     transform: translateY(0);
 }
+
+/* Código de Grupo Premium */
+.resumen-codigo-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.resumen-codigo-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8c86a6;
+    letter-spacing: 0.05em;
+}
+
+.resumen-codigo-badge-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    background: rgba(124, 109, 242, 0.08);
+    border: 1px solid rgba(124, 109, 242, 0.25);
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.resumen-codigo-badge-wrapper:hover {
+    background: rgba(124, 109, 242, 0.15);
+    border-color: rgba(124, 109, 242, 0.45);
+    transform: translateY(-1px);
+}
+
+.resumen-codigo-valor {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #a295ff;
+    letter-spacing: 0.08em;
+}
+
+.resumen-codigo-copiar-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #8c86a6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.resumen-codigo-badge-wrapper:hover .resumen-codigo-copiar-btn {
+    color: #ffffff;
+}
+
+.resumen-copiado-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #7c6df2;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(124, 109, 242, 0.3);
+    pointer-events: none;
+    animation: fadeInTooltip 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+}
+
+.resumen-copiado-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: #7c6df2 transparent transparent transparent;
+}
+
+@keyframes fadeInTooltip {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 4px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}

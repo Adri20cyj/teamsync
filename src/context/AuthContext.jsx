@@ -90,20 +90,142 @@ export const AuthProvider = ({ children }) => {
     const actualizarProyectosUsuario = (nuevosProyectos) => {
         if (!usuarioActual) return;
 
-        // 1. Actualizar en la lista maestra de todos los usuarios
+        // Evitar bucles infinitos si los proyectos son idénticos
+        if (JSON.stringify(usuarioActual.proyectos) === JSON.stringify(nuevosProyectos)) {
+            return;
+        }
+
+        // 1. Actualizar en la lista global de grupos de localStorage
+        const grupos = localStorage.getItem('grupos');
+        let listaGrupos = grupos ? JSON.parse(grupos) : [];
+        
+        nuevosProyectos.forEach(proyecto => {
+            const index = listaGrupos.findIndex(g => g.id === proyecto.id);
+            if (index > -1) {
+                listaGrupos[index] = proyecto;
+            } else {
+                listaGrupos.push(proyecto);
+            }
+        });
+        localStorage.setItem('grupos', JSON.stringify(listaGrupos));
+
+        // 2. Sincronizar con todos los usuarios que tengan estos proyectos
         const usuarios = obtenerUsuarios();
+        const proyectosMap = {};
+        nuevosProyectos.forEach(p => {
+            proyectosMap[p.id] = p;
+        });
+
         const usuariosActualizados = usuarios.map(u => {
             if (u.id === usuarioActual.id) {
                 return { ...u, proyectos: nuevosProyectos };
+            }
+            if (u.proyectos && u.proyectos.length > 0) {
+                const proyectosUserSincronizados = u.proyectos.map(p => {
+                    if (proyectosMap[p.id]) {
+                        return proyectosMap[p.id];
+                    }
+                    return p;
+                });
+                return { ...u, proyectos: proyectosUserSincronizados };
             }
             return u;
         });
         localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
 
-        // 2. Actualizar la sesión activa
+        // 3. Actualizar la sesión activa
         const sesionActualizada = { ...usuarioActual, proyectos: nuevosProyectos };
         setUsuarioActual(sesionActualizada);
         localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
+    };
+
+    // Unirse a un grupo por código de invitación
+    const unirseGrupoPorCodigo = (codigo) => {
+        if (!usuarioActual) {
+            return { exito: false, mensaje: 'Debes iniciar sesión para unirte a un grupo.' };
+        }
+
+        const codigoLimpio = codigo.trim().toUpperCase();
+        
+        // 1. Obtener la lista global de grupos de localStorage
+        const grupos = localStorage.getItem('grupos');
+        const listaGrupos = grupos ? JSON.parse(grupos) : [];
+        
+        // 2. Buscar el grupo con el código coincidente
+        const grupoEncontrado = listaGrupos.find(g => g.codigo && g.codigo.toUpperCase() === codigoLimpio);
+        
+        if (!grupoEncontrado) {
+            // Plan de contingencia: buscar en proyectos de todos los usuarios
+            const usuarios = obtenerUsuarios();
+            let deUsuarioGrupo = null;
+            for (const u of usuarios) {
+                if (u.proyectos) {
+                    const p = u.proyectos.find(proj => proj.codigo && proj.codigo.toUpperCase() === codigoLimpio);
+                    if (p) {
+                        deUsuarioGrupo = p;
+                        break;
+                    }
+                }
+            }
+            if (deUsuarioGrupo) {
+                listaGrupos.push(deUsuarioGrupo);
+                localStorage.setItem('grupos', JSON.stringify(listaGrupos));
+                return vincularUsuarioAGrupo(deUsuarioGrupo, listaGrupos);
+            }
+            return { exito: false, mensaje: 'No se encontró ningún grupo con ese código de invitación.' };
+        }
+
+        return vincularUsuarioAGrupo(grupoEncontrado, listaGrupos);
+    };
+
+    const vincularUsuarioAGrupo = (grupoEncontrado, listaGrupos) => {
+        // Verificar si el usuario ya está en este grupo
+        const yaPertenece = (usuarioActual.proyectos || []).some(p => p.id === grupoEncontrado.id);
+        if (yaPertenece) {
+            return { exito: false, mensaje: 'Ya eres miembro de este grupo.' };
+        }
+
+        // Incrementar la cantidad de miembros y vincular al usuario
+        const grupoActualizado = {
+            ...grupoEncontrado,
+            membersCount: (grupoEncontrado.membersCount || 1) + 1
+        };
+
+        // Actualizar el grupo en la lista global
+        const listaGruposActualizada = listaGrupos.map(g => g.id === grupoActualizado.id ? grupoActualizado : g);
+        if (!listaGrupos.some(g => g.id === grupoActualizado.id)) {
+            listaGruposActualizada.push(grupoActualizado);
+        }
+        localStorage.setItem('grupos', JSON.stringify(listaGruposActualizada));
+
+        // Agregar el grupo a los proyectos del usuario actual
+        const nuevosProyectosUsuario = [...(usuarioActual.proyectos || []), grupoActualizado];
+
+        // Actualizar en el master list de usuarios para todos los usuarios que tengan este grupo
+        const usuarios = obtenerUsuarios();
+        const usuariosActualizados = usuarios.map(u => {
+            if (u.id === usuarioActual.id) {
+                return { ...u, proyectos: nuevosProyectosUsuario };
+            }
+            if (u.proyectos && u.proyectos.length > 0) {
+                const proyectosUserSincronizados = u.proyectos.map(p => {
+                    if (p.id === grupoActualizado.id) {
+                        return grupoActualizado;
+                    }
+                    return p;
+                });
+                return { ...u, proyectos: proyectosUserSincronizados };
+            }
+            return u;
+        });
+        localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
+
+        // Actualizar la sesión activa
+        const sesionActualizada = { ...usuarioActual, proyectos: nuevosProyectosUsuario };
+        setUsuarioActual(sesionActualizada);
+        localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
+
+        return { exito: true, proyecto: grupoActualizado };
     };
 
     // Cerrar sesión usuario
@@ -181,7 +303,8 @@ export const AuthProvider = ({ children }) => {
             toggleEstadoUsuario,
             cambiarContrasenaUsuario,
             actualizarProyectosUsuario,
-            actualizarContenidoProyecto
+            actualizarContenidoProyecto,
+            unirseGrupoPorCodigo
         }}>
             {children}
         </AuthContext.Provider>

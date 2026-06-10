@@ -11,7 +11,7 @@ import LineaTiempo from "./LineaTiempo/LineaTiempo";
 import Carga from "./Carga/Carga";
 
 const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyectos", setTabActivo }) => {
-    const { actualizarProyectosUsuario } = useAuth();
+    const { actualizarProyectosUsuario, unirseGrupoPorCodigo } = useAuth();
     const [proyectos, setProyectos] = useState(usuarioActual?.proyectos || []);
 
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -40,6 +40,32 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
             setProyectos(usuarioActual.proyectos);
         }
     }, [usuarioActual]);
+
+    const generarCodigoGrupo = () => {
+        const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let resultado = "";
+        for (let i = 0; i < 6; i++) {
+            resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        }
+        return resultado;
+    };
+
+    // Auto-generar códigos para proyectos antiguos que no tengan
+    useEffect(() => {
+        if (proyectos.length > 0) {
+            let modificado = false;
+            const proyectosActualizados = proyectos.map(p => {
+                if (!p.codigo) {
+                    modificado = true;
+                    return { ...p, codigo: generarCodigoGrupo() };
+                }
+                return p;
+            });
+            if (modificado) {
+                setProyectos(proyectosActualizados);
+            }
+        }
+    }, [proyectos]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -77,9 +103,12 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
             membersCount: parseInt(nuevoProyecto.membersCount) || 1,
             startDate: formatReadableDate(nuevoProyecto.startDate) || "Hoy",
             endDate: formatReadableDate(nuevoProyecto.endDate) || "Por definir",
+            startDateRaw: nuevoProyecto.startDate || null,
+            endDateRaw: nuevoProyecto.endDate || null,
             iconType: nuevoProyecto.iconType,
             tareas: [],
-            recursos: []
+            recursos: [],
+            codigo: generarCodigoGrupo()
         };
 
         setProyectos([...proyectos, project]);
@@ -99,28 +128,13 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         e.preventDefault();
         if (!codigoInvitacion.trim()) return;
 
-        const options = { day: 'numeric', month: 'short' };
-        const todayStr = new Date().toLocaleDateString('es-ES', options);
-
-        const project = {
-            id: Date.now(),
-            title: `Proyecto Unido (${codigoInvitacion.toUpperCase()})`,
-            tag: "UNIDO",
-            description: `Grupo unido mediante código de invitación: ${codigoInvitacion.toUpperCase()}`,
-            progress: 0,
-            tasksCompleted: 0,
-            tasksTotal: 0,
-            membersCount: 2,
-            startDate: todayStr,
-            endDate: "Por definir",
-            iconType: "education",
-            tareas: [],
-            recursos: []
-        };
-
-        setProyectos([...proyectos, project]);
-        setCodigoInvitacion("");
-        setMostrarUnirseModal(false);
+        const resultado = unirseGrupoPorCodigo(codigoInvitacion);
+        if (resultado.exito) {
+            setCodigoInvitacion("");
+            setMostrarUnirseModal(false);
+        } else {
+            alert(resultado.mensaje);
+        }
     };
 
     // Iniciales para el avatar

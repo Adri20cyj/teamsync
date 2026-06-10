@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./ResumenProyecto.css"
 
 const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasCompletas = [] }) => {
@@ -7,6 +8,15 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
     const porcentaje = total > 0 ? Math.round((completas / total) * 100) : 0;
     const alumnosCount = proyecto ? (proyecto.membersCount || 1) : 1;
 
+    const [copiado, setCopiado] = useState(false);
+
+    const copiarCodigo = () => {
+        if (!proyecto?.codigo) return;
+        navigator.clipboard.writeText(proyecto.codigo);
+        setCopiado(true);
+        setTimeout(() => setCopiado(false), 2000);
+    };
+
     return (
         <div className="resumen-premium-card">
             {/* Sección Izquierda */}
@@ -15,6 +25,27 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
                     <span>COLABORACIÓN EN EQUIPO</span>
                 </div>
                 <h3 className="resumen-premium-titulo">{title}</h3>
+                
+                {proyecto && (
+                    <div className="resumen-codigo-contenedor">
+                        <span className="resumen-codigo-label">CÓDIGO DE GRUPO:</span>
+                        <div className="resumen-codigo-badge-wrapper" onClick={copiarCodigo} title="Copiar código al portapapeles">
+                            <span className="resumen-codigo-valor">{proyecto.codigo || 'GENERANDO...'}</span>
+                            <button className="resumen-codigo-copiar-btn">
+                                {copiado ? (
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                    </svg>
+                                ) : (
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                                    </svg>
+                                )}
+                            </button>
+                            {copiado && <span className="resumen-copiado-tooltip">¡Copiado!</span>}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Sección Derecha */}
