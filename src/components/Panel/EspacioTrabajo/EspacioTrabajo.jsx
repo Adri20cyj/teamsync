@@ -108,7 +108,8 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
             iconType: nuevoProyecto.iconType,
             tareas: [],
             recursos: [],
-            codigo: generarCodigoGrupo()
+            codigo: generarCodigoGrupo(),
+            creadorId: usuarioActual?.id || null
         };
 
         setProyectos([...proyectos, project]);

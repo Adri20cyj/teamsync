@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import Header from "./Header/Header"
 import ResumenProyecto from "./ResumenProyecto/ResumenProyecto"
 import Recursos from "./Recursos/Recursos"
@@ -18,12 +18,11 @@ const Panel = ({ onVolver, proyecto }) => {
     const tareas = proyectoSincronizado?.tareas || [];
 
     // 3. Derivamos los miembros del grupo: todos los usuarios que tienen este proyecto
-    const miembros = useMemo(() => {
-        const todosUsuarios = obtenerUsuarios();
-        return todosUsuarios
-            .filter(u => u.proyectos?.some(p => p.id === proyectoSincronizado.id))
-            .map((u, i) => ({ id: i + 1, email: u.email, nombre: u.nombre, apellido: u.apellido }));
-    }, [proyectoSincronizado.id]);
+    //    Se recalcula en cada render porque depende de usuarioActual (que cambia al quitar/agregar miembros)
+    const todosUsuarios = obtenerUsuarios();
+    const miembros = todosUsuarios
+        .filter(u => u.proyectos?.some(p => p.id === proyectoSincronizado.id))
+        .map((u, i) => ({ id: i + 1, userId: u.id, email: u.email, nombre: u.nombre, apellido: u.apellido }));
 
     const tareasCompletas = tareas.filter(tarea => tarea.check);
 
@@ -32,7 +31,15 @@ const Panel = ({ onVolver, proyecto }) => {
             <Header setPestanaActiva={setPestanaActiva} onVolver={onVolver} />
             <div className="panel-body">
                 <section className="panel-tareas">
-                    <ResumenProyecto setPestanaActiva={setPestanaActiva} proyecto={proyectoSincronizado} tareas={tareas} tareasCompletas={tareasCompletas} />
+                    <ResumenProyecto
+                        setPestanaActiva={setPestanaActiva}
+                        proyecto={proyectoSincronizado}
+                        tareas={tareas}
+                        tareasCompletas={tareasCompletas}
+                        onVolver={onVolver}
+                        usuarioActual={usuarioActual}
+                        miembros={miembros}
+                    />
 
                     {pestanaActiva === 'tareas' && (
                         <TablaTareas

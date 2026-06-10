@@ -228,6 +228,128 @@ export const AuthProvider = ({ children }) => {
         return { exito: true, proyecto: grupoActualizado };
     };
 
+    // Eliminar grupo completo (solo el creador puede hacerlo)
+    const eliminarGrupo = (proyectoId) => {
+        if (!usuarioActual) return { exito: false };
+
+        // 1. Eliminar de la lista global de grupos
+        const grupos = localStorage.getItem('grupos');
+        const listaGrupos = grupos ? JSON.parse(grupos) : [];
+        const listaActualizada = listaGrupos.filter(g => g.id !== proyectoId);
+        localStorage.setItem('grupos', JSON.stringify(listaActualizada));
+
+        // 2. Quitar el proyecto de TODOS los usuarios que lo tengan
+        const usuarios = obtenerUsuarios();
+        const usuariosActualizados = usuarios.map(u => ({
+            ...u,
+            proyectos: (u.proyectos || []).filter(p => p.id !== proyectoId)
+        }));
+        localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
+
+        // 3. Actualizar sesión activa
+        const nuevosProyectos = (usuarioActual.proyectos || []).filter(p => p.id !== proyectoId);
+        const sesionActualizada = { ...usuarioActual, proyectos: nuevosProyectos };
+        setUsuarioActual(sesionActualizada);
+        localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
+
+        return { exito: true };
+    };
+
+    // Salir de un grupo (miembro que se unió)
+    const salirDeGrupo = (proyectoId) => {
+        if (!usuarioActual) return { exito: false };
+
+        // 1. Quitar el proyecto solo del usuario actual
+        const nuevosProyectos = (usuarioActual.proyectos || []).filter(p => p.id !== proyectoId);
+        const sesionActualizada = { ...usuarioActual, proyectos: nuevosProyectos };
+        setUsuarioActual(sesionActualizada);
+        localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
+
+        // 2. Actualizar en lista global de usuarios
+        const usuarios = obtenerUsuarios();
+        const usuariosActualizados = usuarios.map(u => {
+            if (u.id === usuarioActual.id) {
+                return { ...u, proyectos: nuevosProyectos };
+            }
+            // Decrementar membersCount en los demás usuarios que tengan el grupo
+            if (u.proyectos?.some(p => p.id === proyectoId)) {
+                return {
+                    ...u,
+                    proyectos: u.proyectos.map(p =>
+                        p.id === proyectoId
+                            ? { ...p, membersCount: Math.max(1, (p.membersCount || 1) - 1) }
+                            : p
+                    )
+                };
+            }
+            return u;
+        });
+        localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
+
+        // 3. Actualizar membersCount en la lista global de grupos
+        const grupos = localStorage.getItem('grupos');
+        const listaGrupos = grupos ? JSON.parse(grupos) : [];
+        const listaActualizada = listaGrupos.map(g =>
+            g.id === proyectoId
+                ? { ...g, membersCount: Math.max(1, (g.membersCount || 1) - 1) }
+                : g
+        );
+        localStorage.setItem('grupos', JSON.stringify(listaActualizada));
+
+        return { exito: true };
+    };
+
+    // Quitar un miembro específico del grupo (solo el creador puede hacerlo)
+    const quitarMiembro = (proyectoId, miembroId) => {
+        if (!usuarioActual) return { exito: false };
+
+        const usuarios = obtenerUsuarios();
+
+        // 1. Quitar el proyecto del usuario expulsado
+        const usuariosActualizados = usuarios.map(u => {
+            if (u.id === miembroId) {
+                return { ...u, proyectos: (u.proyectos || []).filter(p => p.id !== proyectoId) };
+            }
+            // Decrementar membersCount en los demás miembros del grupo
+            if (u.proyectos?.some(p => p.id === proyectoId)) {
+                return {
+                    ...u,
+                    proyectos: u.proyectos.map(p =>
+                        p.id === proyectoId
+                            ? { ...p, membersCount: Math.max(1, (p.membersCount || 1) - 1) }
+                            : p
+                    )
+                };
+            }
+            return u;
+        });
+        localStorage.setItem('usuarios', JSON.stringify(usuariosActualizados));
+
+        // 2. Actualizar membersCount en la lista global de grupos
+        const grupos = localStorage.getItem('grupos');
+        const listaGrupos = grupos ? JSON.parse(grupos) : [];
+        const listaActualizada = listaGrupos.map(g =>
+            g.id === proyectoId
+                ? { ...g, membersCount: Math.max(1, (g.membersCount || 1) - 1) }
+                : g
+        );
+        localStorage.setItem('grupos', JSON.stringify(listaActualizada));
+
+        // 3. Actualizar sesión activa del creador (su membersCount también cambia)
+        const sesionActualizada = {
+            ...usuarioActual,
+            proyectos: (usuarioActual.proyectos || []).map(p =>
+                p.id === proyectoId
+                    ? { ...p, membersCount: Math.max(1, (p.membersCount || 1) - 1) }
+                    : p
+            )
+        };
+        setUsuarioActual(sesionActualizada);
+        localStorage.setItem('usuarioActual', JSON.stringify(sesionActualizada));
+
+        return { exito: true };
+    };
+
     // Cerrar sesión usuario
     const cerrarSesion = () => {
         setUsuarioActual(null);
@@ -304,7 +426,10 @@ export const AuthProvider = ({ children }) => {
             cambiarContrasenaUsuario,
             actualizarProyectosUsuario,
             actualizarContenidoProyecto,
-            unirseGrupoPorCodigo
+            unirseGrupoPorCodigo,
+            eliminarGrupo,
+            salirDeGrupo,
+            quitarMiembro
         }}>
             {children}
         </AuthContext.Provider>
