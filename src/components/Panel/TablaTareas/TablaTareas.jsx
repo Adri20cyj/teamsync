@@ -8,7 +8,7 @@ import { ListIcon, ChartIcon } from "../EspacioTrabajo/Icons/Icons";
 
 import "./TablaTareas.css";
 
-const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
+const TablaTareas = ({ proyecto, miembros = [] }) => {
     const { usuarioActual, actualizarContenidoProyecto } = useAuth();
     const [tareas, setTareas] = useState(proyecto?.tareas || []);
     const [vistaTareas, setVistaTareas] = useState("lista"); // "lista" | "cronograma"
@@ -24,20 +24,7 @@ const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
         const tareasActualizadas = [...tareas, nuevaTarea];
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
-
         actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
-        const existeMiembro = miembros.some(m => m.email === nuevaTarea.asignado);
-
-        if (!existeMiembro && nuevaTarea.asignado !== "Todos") {
-            const nuevoMiembro = {
-                id: miembros.length + 1,
-                email: nuevaTarea.asignado
-            };
-
-            const updatedMiembros = [...miembros, nuevoMiembro];
-            setMiembros(updatedMiembros);
-            localStorage.setItem("miembros", JSON.stringify(updatedMiembros));
-        }
     };
 
     const checkTarea = (id) => {
