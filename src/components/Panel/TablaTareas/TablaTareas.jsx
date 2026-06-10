@@ -4,6 +4,7 @@ import AgregarTarea from "./AgregarTarea";
 import ModalTarea from "./ModalTarea";
 import CronogramaTareas from "../CronogramaTareas/CronogramaTareas";
 import { useAuth } from "../../../context/AuthContext";
+import { ListIcon, ChartIcon } from "../EspacioTrabajo/Icons/Icons";
 
 import "./TablaTareas.css";
 
@@ -46,7 +47,7 @@ const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
         actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
-        
+
         // Si la tarea que se checkea está abierta en el modal, actualizarla allí también
         if (tareaSeleccionada && tareaSeleccionada.id === id) {
             setTareaSeleccionada(prev => prev ? { ...prev, check: !prev.check } : null);
@@ -81,17 +82,19 @@ const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
 
                 {/* Alternador de Vistas */}
                 <div className="vista-switcher">
-                    <button 
+                    <button
                         className={`switcher-btn ${vistaTareas === 'lista' ? 'activo' : ''}`}
                         onClick={() => setVistaTareas('lista')}
                     >
-                        📋 Lista
+                        <ListIcon />
+                        <span>Lista</span>
                     </button>
-                    <button 
+                    <button
                         className={`switcher-btn ${vistaTareas === 'cronograma' ? 'activo' : ''}`}
                         onClick={() => setVistaTareas('cronograma')}
                     >
-                        📅 Cronograma
+                        <ChartIcon />
+                        <span>Cronograma</span>
                     </button>
                 </div>
             </div>
@@ -116,8 +119,8 @@ const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
                 )}
 
                 {vistaTareas === 'cronograma' && (
-                    <CronogramaTareas 
-                        tareas={tareas} 
+                    <CronogramaTareas
+                        tareas={tareas}
                         onSelectTarea={setTareaSeleccionada}
                     />
                 )}
@@ -128,7 +131,7 @@ const TablaTareas = ({ proyecto, miembros = [], setMiembros }) => {
 
             {/* Modal de Detalle de Tarea */}
             {tareaSeleccionada && (
-                <ModalTarea 
+                <ModalTarea
                     tarea={tareaSeleccionada}
                     onClose={() => setTareaSeleccionada(null)}
                     onSave={(updated) => {

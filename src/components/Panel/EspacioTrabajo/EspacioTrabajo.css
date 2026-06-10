@@ -120,7 +120,8 @@
     align-items: center;
     background-color: #0d0717;
     border: 1px solid rgba(124, 109, 242, 0.12);
-    border-left: 5px solid #ff5722; /* Borde izquierdo destacado en naranja */
+    border-left: 5px solid #ff5722;
+    /* Borde izquierdo destacado en naranja */
     border-radius: 20px;
     padding: 22px 24px;
     margin-bottom: 28px;
@@ -288,7 +289,9 @@
     border-radius: 16px;
     padding: 6px;
     gap: 6px;
-    width: fit-content;
+    width: 100%;
+    max-width: calc(100% - 2px);
+    box-sizing: border-box;
 }
 
 .workspace-tab-btn {
@@ -331,14 +334,11 @@
    ========================================== */
 .proyectos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 280px));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.2rem;
     align-items: stretch;
 }
 
-/* ==========================================
-   MODALES (CREACIÓN Y UNIÓN)
-   ========================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -572,8 +572,13 @@
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scaleIn {
@@ -581,6 +586,7 @@
         transform: scale(0.95);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;

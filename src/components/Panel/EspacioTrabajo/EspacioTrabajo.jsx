@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import "./EspacioTrabajo.css";
-import { PlusIcon, UserIcon } from "./Icons/Icons";
+import { PlusIcon, UserIcon, CalendarIcon, TimelineIcon, WorkloadIcon } from "./Icons/Icons";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
@@ -167,19 +167,22 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
                     className={`workspace-tab-btn ${tabActivo === 'calendario' ? 'activo' : ''}`}
                     onClick={() => setTabActivo('calendario')}
                 >
-                    📅 CALENDARIO GENERAL
+                    <CalendarIcon />
+                    <span>CALENDARIO GENERAL</span>
                 </button>
                 <button
                     className={`workspace-tab-btn ${tabActivo === 'linea_tiempo' ? 'activo' : ''}`}
                     onClick={() => setTabActivo('linea_tiempo')}
                 >
-                    📋 LÍNEA DEL TIEMPO
+                    <TimelineIcon />
+                    <span>LÍNEA DEL TIEMPO</span>
                 </button>
                 <button
                     className={`workspace-tab-btn ${tabActivo === 'carga' ? 'activo' : ''}`}
                     onClick={() => setTabActivo('carga')}
                 >
-                    👥 CARGA / WORKLOAD
+                    <WorkloadIcon />
+                    <span>CARGA / WORKLOAD</span>
                 </button>
             </div>
 

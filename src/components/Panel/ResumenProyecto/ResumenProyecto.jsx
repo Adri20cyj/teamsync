@@ -12,9 +12,9 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
             {/* Sección Izquierda */}
             <div className="resumen-premium-izquierda">
                 <div className="academia-badge">
-                    <span>✨ ACADEMIA & COLABORACIÓN PREMIUM</span>
+                    <span>COLABORACIÓN EN EQUIPO</span>
                 </div>
-                <h1 className="resumen-premium-titulo">{title}</h1>
+                <h3 className="resumen-premium-titulo">{title}</h3>
             </div>
 
             {/* Sección Derecha */}
@@ -41,7 +41,7 @@ const ResumenProyecto = ({ setPestanaActiva, proyecto, tareas = [], tareasComple
 
                     <button className="boton-ir-dashboard" onClick={() => setPestanaActiva('dashboard')}>
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style={{ marginRight: '6px' }}>
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
                         </svg>
                         <span>IR A DASHBOARD</span>
                     </button>

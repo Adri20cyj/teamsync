@@ -42,3 +42,12 @@
     height: 20px;
     stroke-width: 2;
 }
+
+/* Iconos dentro de tabs/switchers: igual al tamaño del texto (1em) */
+.workspace-tab-btn svg,
+.switcher-btn svg {
+    width: 1em;
+    height: 1em;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
