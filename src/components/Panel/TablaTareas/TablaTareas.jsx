@@ -152,7 +152,7 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
                         ))}
                     </select>
                 </div>
-                
+
                 <div className="filtro-grupo">
                     <label>Estado</label>
                     <select className="selector" value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
@@ -181,21 +181,21 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
                     <div className="reporte-col-usuario">
                         <div className="reporte-avatar">{getInitials(filtroMiembro)}</div>
                         <div className="reporte-info">
-                            <span className="reporte-lbl">REPORTE DE AVANCE INDIVIDUAL</span>
+                            <span className="reporte-lbl">REPORTE INDIVIDUAL</span>
                             <span className="reporte-val-email">{filtroMiembro}</span>
                         </div>
                     </div>
-                    
+
                     <div className="reporte-col">
                         <span className="reporte-lbl">TAREAS COMPLETAS</span>
                         <span className="reporte-val">{completadasMiembro.length} / {totalTareasMiembro.length}</span>
                     </div>
-                    
+
                     <div className="reporte-col">
                         <span className="reporte-lbl">VALOR PONDERADO</span>
                         <span className="reporte-val">{pesoCompletadoMiembro}% / {pesoTotalMiembro}%</span>
                     </div>
-                    
+
                     <div className="reporte-col progreso-col">
                         <div className="progreso-header">
                             <span className="reporte-lbl">PROGRESO PONDERADO</span>

@@ -330,7 +330,7 @@ input::placeholder {
 .reporte-col-usuario {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
     flex: 2;
     min-width: 250px;
 }
@@ -367,22 +367,23 @@ input::placeholder {
 
 .reporte-val-email {
     font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #ffffff;
+
 }
 
 .reporte-col {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     flex: 1;
-    min-width: 120px;
+    min-width: 200px;
 }
 
 .reporte-val {
     font-family: 'Inter', sans-serif;
-    font-size: 1.25rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #ffffff;
 }
@@ -439,4 +440,4 @@ input::placeholder {
     color: #8b7eff;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-}
+}
