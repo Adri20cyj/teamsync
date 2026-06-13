@@ -62,6 +62,12 @@ function App() {
     setProyectoSeleccionado(null);
   };
 
+  const handleNavigateToLineaTiempo = () => {
+    setVista('proyectos');
+    setTabActivo('linea_tiempo');
+    setProyectoSeleccionado(null);
+  };
+
   const handleNavigateToCarga = () => {
     setVista('proyectos');
     setTabActivo('carga');
@@ -78,10 +84,13 @@ function App() {
         onSelectProyecto={handleSelectProyecto}
         onNavigateToProyectos={handleNavigateToProyectos}
         onNavigateToCalendario={handleNavigateToCalendario}
+        onNavigateToLineaTiempo={handleNavigateToLineaTiempo}
         onNavigateToCarga={handleNavigateToCarga}
         onOpenNotifications={() => setMostrarNotificaciones(true)}
         onLogout={cerrarSesion}
         proyectoSeleccionado={proyectoSeleccionado}
+        vista={vista}
+        tabActivo={tabActivo}
       />
       
       <div className="app-main-content">

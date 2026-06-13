@@ -6,9 +6,10 @@
     /**/
     display: flex;
     flex-direction: column;
-    height: auto; 
-    box-sizing: border-box;    
+    height: auto;
+    box-sizing: border-box;
     /**/
+    min-width: 0;
 }
 
 .tabla-titulo {
@@ -40,9 +41,21 @@
     letter-spacing: 0.08em;
     color: #8c86a6;
     text-transform: uppercase;
-    margin-top: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-style: normal;
     text-shadow: none;
+}
+
+.mensaje-vacio {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #8c86a6;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0;
+
 }
 
 .pendientes {
@@ -85,7 +98,7 @@
 .campos-adicionales {
     grid-column: span 2;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 16px;
     width: 100%;
     border-bottom: 1px solid rgba(124, 109, 242, 0.08);
@@ -132,6 +145,9 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin: 0;
+    min-height: 36px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .selector-fecha {
@@ -179,6 +195,9 @@
     margin-bottom: 24px;
     min-height: 200px;
     height: auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 
@@ -232,3 +251,192 @@ input::placeholder {
 .añadir-tarea:active {
     transform: scale(0.95);
 }
+
+/* Título de agregar tarea */
+.agregar-tarea-titulo {
+    grid-column: span 2;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #8b7eff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 4px 0;
+}
+
+/* Barra de Filtros */
+.barra-filtros-tareas {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    background-color: #140d23;
+    border: 1px solid rgba(124, 109, 242, 0.12);
+    padding: 16px 20px;
+    border-radius: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.filtro-grupo label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: #8b7eff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.filtro-grupo select {
+    background-color: #0c071d;
+    border: 1px solid rgba(124, 109, 242, 0.2);
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filtro-grupo select:focus {
+    border-color: #8b7eff;
+    box-shadow: 0 0 8px rgba(124, 109, 242, 0.15);
+}
+
+/* Reporte Individual */
+.reporte-individual-card {
+    display: flex;
+    background-color: #140d23;
+    border: 1px solid rgba(124, 109, 242, 0.25);
+    padding: 20px 24px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.reporte-col-usuario {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 2;
+    min-width: 250px;
+}
+
+.reporte-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(124, 109, 242, 0.1);
+    border: 2px solid rgba(124, 109, 242, 0.3);
+    color: #8b7eff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.reporte-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reporte-lbl {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    color: #8b7eff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.reporte-val-email {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.reporte-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.reporte-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.progreso-col {
+    flex: 2.5;
+    min-width: 200px;
+}
+
+.progreso-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.progreso-pct {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #8b7eff;
+}
+
+.barra-progreso-bg {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(124, 109, 242, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.barra-progreso-fill {
+    height: 100%;
+    background-color: #8b7eff;
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+/* Input de Peso Porcentual */
+.peso-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.selector-peso {
+    padding-right: 32px !important;
+    width: 100%;
+}
+
+.porcentaje-simbolo {
+    position: absolute;
+    right: 16px;
+    color: #8b7eff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}

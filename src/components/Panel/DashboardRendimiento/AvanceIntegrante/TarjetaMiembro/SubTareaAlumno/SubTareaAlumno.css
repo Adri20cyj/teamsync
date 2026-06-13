@@ -48,3 +48,16 @@
     margin: 0;
 }
 
+.db-tarea-peso-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(124, 109, 242, 0.25);
+    background-color: rgba(124, 109, 242, 0.08);
+    color: #8b7eff;
+    font-weight: bold;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+

@@ -1,11 +1,11 @@
 import './BarraProgreso.css'
-const BarraProgreso = ({ porcentaje = 0, completadas = 0, total = 0 }) => { 
+const BarraProgreso = ({ titulo = "Progreso Asignado", porcentaje = 0, completadas = 0, total = 0, esPeso = false }) => { 
     return (
         <>
             <div className="db-progreso-contenedor">
                 <div className="db-progreso-texto">
-                    <span>Progreso Asignado</span>
-                    <span>{porcentaje}% ({completadas}/{total})</span>
+                    <span>{titulo}</span>
+                    <span>{porcentaje}% {esPeso ? `(${completadas}% / ${total}%)` : `(${completadas}/${total})`}</span>
                 </div>
                 <div className="db-barra-fondo">
                     <div className="db-barra-relleno" style={{ width: `${porcentaje}%` }} />
@@ -14,4 +14,4 @@ const BarraProgreso = ({ porcentaje = 0, completadas = 0, total = 0 }) => {
         </>
     )
 }
-export default BarraProgreso
+export default BarraProgreso

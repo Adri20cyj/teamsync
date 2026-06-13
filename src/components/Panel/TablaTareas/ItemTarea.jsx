@@ -1,6 +1,21 @@
 import "./ItemTarea.css"
+import { TrashIcon } from "../EspacioTrabajo/Icons/Icons";
 
-const ItemTarea = ({ tarea, onCheck, onClick }) => {
+
+const getInitials = (name) => {
+    if (!name) return "?";
+    if (name.toLowerCase() === "todos") return "TD";
+    const clean = name.split('@')[0];
+    return clean.slice(0, 2).toUpperCase();
+};
+
+const getCleanName = (name) => {
+    if (!name) return "Sin asignar";
+    if (name.toLowerCase() === "todos") return "Asignar a todos";
+    return name.split('@')[0];
+};
+
+const ItemTarea = ({ tarea, onCheck, onClick, onDelete }) => {
     const formatFecha = (dateStr) => {
         if (!dateStr) return "Sin fecha";
         const parts = dateStr.split('-');
@@ -11,37 +26,57 @@ const ItemTarea = ({ tarea, onCheck, onClick }) => {
     };
 
     const obtenerEstado = () => {
-        if (tarea.check || tarea.estaTerminada) {
-            return { label: "Completada", clase: "estado-completada" };
+        const est = tarea.estado || "PENDIENTE";
+        if (est === "ENVIADO") {
+            return { label: "ENVIADO", clase: "estado-enviado" };
         }
-        if (!tarea.fechaLimite) {
-            return { label: "Sin fecha definida", clase: "estado-sin-fecha" };
+        if (est === "REVISADO") {
+            return { label: "REVISADO", clase: "estado-revisado" };
         }
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        const limite = new Date(tarea.fechaLimite + 'T00:00:00');
-        if (isNaN(limite.getTime())) {
-            return { label: "Sin fecha definida", clase: "estado-sin-fecha" };
+        
+        if (tarea.fechaLimite) {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            const limite = new Date(tarea.fechaLimite + 'T00:00:00');
+            if (!isNaN(limite.getTime()) && limite < hoy) {
+                return { label: "ATRASADA", clase: "estado-atrasada" };
+            }
         }
-        if (limite < hoy) {
-            return { label: "Atrasada", clase: "estado-atrasada" };
-        }
-        return { label: "Activa", clase: "estado-activa" };
+        return { label: "PENDIENTE", clase: "estado-pendiente" };
     };
 
     const estado = obtenerEstado();
     const prioridad = tarea.prioridad || "Media";
 
+    const getPrioridadLabel = (p) => {
+        const clean = (p || "Media").toLowerCase();
+        if (clean === "alta") return "HIGH";
+        if (clean === "baja") return "LOW";
+        return "MEDIUM";
+    };
+
+    const isCompletada = tarea.estado === "ENVIADO" || tarea.estado === "REVISADO";
+
     return (
-        <article className={`item ${tarea.check ? 'item-check-completada' : ''}`} onClick={onClick}>
+        <article className={`item ${isCompletada ? 'item-check-completada' : ''}`} onClick={onClick}>
+            <button 
+                className={`check-circular ${isCompletada ? 'completado' : ''}`} 
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onCheck();
+                }}
+            />
             <div className="item-principal">
                 <p className="item-titulo">{tarea.titulo}</p>
                 <div className="item-badges">
                     <span className={`badge-prioridad prioridad-${prioridad.toLowerCase()}`}>
-                        {prioridad}
+                        {getPrioridadLabel(prioridad)}
                     </span>
                     <span className={`badge-estado ${estado.clase}`}>
                         {estado.label}
+                    </span>
+                    <span className="badge-peso">
+                        {tarea.peso || 0}% PESO
                     </span>
                     {tarea.fechaLimite && (
                         <span className="badge-fecha">
@@ -51,20 +86,23 @@ const ItemTarea = ({ tarea, onCheck, onClick }) => {
                 </div>
             </div>
             <div className="item-todo">
-                <p className="nombre-alumno">{tarea.asignado || "Sin asignar"}</p>
-                <input 
-                    className="check" 
-                    type="checkbox" 
-                    checked={!!tarea.check} 
-                    onClick={(e) => e.stopPropagation()} 
-                    onChange={(e) => {
+                <div className="asignado-pill" onClick={(e) => e.stopPropagation()}>
+                    <div className="asignado-avatar">{getInitials(tarea.asignado)}</div>
+                    <span className="asignado-nombre">{getCleanName(tarea.asignado)}</span>
+                </div>
+                <button 
+                    className="btn-eliminar-item" 
+                    onClick={(e) => {
                         e.stopPropagation();
-                        onCheck();
-                    }} 
-                />
+                        onDelete();
+                    }}
+                >
+                    <TrashIcon />
+                </button>
             </div>
         </article>
     );
 };
 
-export default ItemTarea;
+export default ItemTarea;
+

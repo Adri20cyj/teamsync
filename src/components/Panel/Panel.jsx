@@ -28,7 +28,12 @@ const Panel = ({ onVolver, proyecto }) => {
 
     return (
         <div className="panel-wrapper">
-            <Header setPestanaActiva={setPestanaActiva} onVolver={onVolver} />
+            <Header 
+                pestanaActiva={pestanaActiva} 
+                setPestanaActiva={setPestanaActiva} 
+                onVolver={onVolver} 
+                proyecto={proyectoSincronizado} 
+            />
             <div className="panel-body">
                 <section className="panel-tareas">
                     <ResumenProyecto

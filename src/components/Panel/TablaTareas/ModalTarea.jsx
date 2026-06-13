@@ -6,7 +6,8 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
     const [asignado, setAsignado] = useState(tarea.asignado || "Todos");
     const [prioridad, setPrioridad] = useState(tarea.prioridad || "Media");
     const [fechaLimite, setFechaLimite] = useState(tarea.fechaLimite || "");
-    const [check, setCheck] = useState(!!tarea.check);
+    const [estado, setEstado] = useState(tarea.estado || "PENDIENTE");
+    const [peso, setPeso] = useState(tarea.peso || 0);
 
     // Actualizar estados si la tarea cambia externamente
     useEffect(() => {
@@ -15,43 +16,25 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
             setAsignado(tarea.asignado || "Todos");
             setPrioridad(tarea.prioridad || "Media");
             setFechaLimite(tarea.fechaLimite || "");
-            setCheck(!!tarea.check);
+            setEstado(tarea.estado || "PENDIENTE");
+            setPeso(tarea.peso || 0);
         }
     }, [tarea]);
-
-    // Calcular el estado de la tarea en tiempo real para mostrar el badge
-    const obtenerEstado = () => {
-        if (check) {
-            return { label: "Completada", clase: "estado-completada" };
-        }
-        if (!fechaLimite) {
-            return { label: "Sin fecha definida", clase: "estado-sin-fecha" };
-        }
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        const limite = new Date(fechaLimite + 'T00:00:00');
-        if (isNaN(limite.getTime())) {
-            return { label: "Sin fecha definida", clase: "estado-sin-fecha" };
-        }
-        if (limite < hoy) {
-            return { label: "Atrasada", clase: "estado-atrasada" };
-        }
-        return { label: "Activa", clase: "estado-activa" };
-    };
-
-    const estado = obtenerEstado();
 
     const handleSave = (e) => {
         e.preventDefault();
         if (titulo.trim() === "") return;
+        const isCompletada = estado === "ENVIADO" || estado === "REVISADO";
         onSave({
             ...tarea,
             titulo: titulo.trim(),
             asignado,
             prioridad,
             fechaLimite,
-            check,
-            estaTerminada: check
+            estado,
+            check: isCompletada,
+            estaTerminada: isCompletada,
+            peso: parseInt(peso) || 0
         });
     };
 
@@ -59,15 +42,15 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <header className="modal-header">
-                    <h3>Detalles de la Tarea</h3>
+                    <h4 className="modal-subtitulo-sup">DETALLE DEL HITO ACADÉMICO</h4>
                     <button className="boton-cerrar-x" onClick={onClose}>&times;</button>
                 </header>
 
                 <form onSubmit={handleSave} className="modal-form">
-                    <div className="grupo-formulario">
-                        <label>Título de la Tarea</label>
+                    <div className="modal-titulo-wrapper">
                         <input 
                             type="text" 
+                            className="modal-titulo-input"
                             value={titulo} 
                             onChange={(e) => setTitulo(e.target.value)} 
                             placeholder="Escribe el título..."
@@ -77,7 +60,25 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
 
                     <div className="cuadricula-formulario">
                         <div className="grupo-formulario">
-                            <label>Asignado a</label>
+                            <label>ESTADO DE AVANCE</label>
+                            <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+                                <option value="PENDIENTE">PENDIENTE</option>
+                                <option value="ENVIADO">ENVIADO</option>
+                                <option value="REVISADO">REVISADO</option>
+                            </select>
+                        </div>
+
+                        <div className="grupo-formulario">
+                            <label>PRIORIDAD</label>
+                            <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
+                                <option value="Baja">BAJA</option>
+                                <option value="Media">MEDIA</option>
+                                <option value="Alta">ALTA</option>
+                            </select>
+                        </div>
+
+                        <div className="grupo-formulario">
+                            <label>ASIGNAR RESPONSABLE</label>
                             <select value={asignado} onChange={(e) => setAsignado(e.target.value)}>
                                 <option value="Todos">Todos</option>
                                 {miembros.map((miembro) => (
@@ -89,42 +90,28 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
                         </div>
 
                         <div className="grupo-formulario">
-                            <label>Prioridad</label>
-                            <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
-                                <option value="Baja">Baja</option>
-                                <option value="Media">Media</option>
-                                <option value="Alta">Alta</option>
-                            </select>
-                        </div>
-
-                        <div className="grupo-formulario">
-                            <label>Fecha Límite</label>
+                            <label>FECHA DE ENTREGA</label>
                             <input 
                                 type="date" 
                                 value={fechaLimite} 
                                 onChange={(e) => setFechaLimite(e.target.value)} 
                             />
                         </div>
-
-                        <div className="grupo-formulario">
-                            <label>Estado Actual</label>
-                            <div className="badge-contenedor-modal">
-                                <span className={`badge-estado ${estado.clase}`}>
-                                    {estado.label}
-                                </span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div className="grupo-formulario checkbox-container">
-                        <label className="checkbox-label-modal">
+                    <div className="grupo-formulario peso-seccion-modal">
+                        <label>PESO DE LA TAREAS (%)</label>
+                        <div className="peso-input-container">
                             <input 
-                                type="checkbox" 
-                                checked={check} 
-                                onChange={(e) => setCheck(e.target.checked)} 
+                                type="number" 
+                                className="selector selector-peso" 
+                                min="0"
+                                max="100"
+                                value={peso} 
+                                onChange={(e) => setPeso(Math.max(0, Math.min(100, parseInt(e.target.value) || 0)))} 
                             />
-                            <span className="checkbox-custom-label">Marcar como tarea completada</span>
-                        </label>
+                            <span className="porcentaje-simbolo">%</span>
+                        </div>
                     </div>
 
                     <footer className="modal-footer">
@@ -151,3 +138,4 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
 };
 
 export default ModalTarea;
+

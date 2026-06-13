@@ -10,6 +10,8 @@ import {
     IconChevronRight,
     IconLogout,
     IconStack,
+    IconTimeline,
+    IconCarga,
 } from "./IconsSideBar";
 
 
@@ -21,10 +23,13 @@ const Sidebar = ({
     onSelectProyecto,
     onNavigateToProyectos,
     onNavigateToCalendario,
+    onNavigateToLineaTiempo,
     onNavigateToCarga,
     onOpenNotifications,
     onLogout,
-    proyectoSeleccionado
+    proyectoSeleccionado,
+    vista,
+    tabActivo
 }) => {
 
     // Obtener inicial del usuario
@@ -50,7 +55,6 @@ const Sidebar = ({
                     {!colapsado && (
                         <div className="logo-text">
                             <h3>TeamSync</h3>
-                            <span>CLICKUP EDITION</span>
                         </div>
                     )}
                 </div>
@@ -71,7 +75,7 @@ const Sidebar = ({
                     <ul className="nav-list">
                         <li
                             onClick={onNavigateToProyectos}
-                            className={`nav-item ${!proyectoSeleccionado ? "activo" : ""}`}
+                            className={`nav-item ${vista === 'proyectos' && tabActivo === 'proyectos' ? "activo" : ""}`}
                             title="Inicio & Proyectos"
                         >
                             <IconHome />
@@ -79,11 +83,27 @@ const Sidebar = ({
                         </li>
                         <li
                             onClick={onNavigateToCalendario}
-                            className="nav-item"
+                            className={`nav-item ${vista === 'proyectos' && tabActivo === 'calendario' ? "activo" : ""}`}
                             title="Calendario General"
                         >
                             <IconCalendar />
                             {!colapsado && <span>Calendario General</span>}
+                        </li>
+                        <li
+                            onClick={onNavigateToLineaTiempo}
+                            className={`nav-item ${vista === 'proyectos' && tabActivo === 'linea_tiempo' ? "activo" : ""}`}
+                            title="Línea del Tiempo"
+                        >
+                            <IconTimeline />
+                            {!colapsado && <span>Línea del Tiempo</span>}
+                        </li>
+                        <li
+                            onClick={onNavigateToCarga}
+                            className={`nav-item ${vista === 'proyectos' && tabActivo === 'carga' ? "activo" : ""}`}
+                            title="Carga / Workload"
+                        >
+                            <IconCarga />
+                            {!colapsado && <span>Carga / Workload</span>}
                         </li>
                         <li
                             onClick={onOpenNotifications}

@@ -5,7 +5,13 @@ const TarjetaMiembro = ({miembro,
     cargasTrabajo = [], 
     tareas = []}) => { 
 
-    const trabajoMiembro = cargasTrabajo?.find(w => w.email === miembro.email) || { total: 0, completado: 0 };
+    const trabajoMiembro = cargasTrabajo?.find(w => w.email === miembro.email) || { 
+        total: 0, 
+        completado: 0, 
+        pesoTotal: 0, 
+        pesoCompletado: 0, 
+        progresoPonderado: 0 
+    };
     const porcentaje = trabajoMiembro.total > 0 ? Math.round((trabajoMiembro.completado / trabajoMiembro.total) * 100) : 0;
     const listaTareasMiembro = tareas.filter(t => t.asignado === miembro.email || t.asignado === "Todos");   
     return (
@@ -22,7 +28,19 @@ const TarjetaMiembro = ({miembro,
                         </div>
                     </div>
 
-                    <BarraProgreso porcentaje={porcentaje} completadas={trabajoMiembro.completado} total={trabajoMiembro.total} />
+                    <BarraProgreso 
+                        titulo="Progreso de Tareas" 
+                        porcentaje={porcentaje} 
+                        completadas={trabajoMiembro.completado} 
+                        total={trabajoMiembro.total} 
+                    />
+                    <BarraProgreso 
+                        titulo="Progreso Ponderado (Peso)" 
+                        porcentaje={trabajoMiembro.progresoPonderado} 
+                        completadas={trabajoMiembro.pesoCompletado} 
+                        total={trabajoMiembro.pesoTotal} 
+                        esPeso={true}
+                    />
                     <SubTareaAlumno listaTareasMiembro={listaTareasMiembro}/>
                     
                 </div>
@@ -31,3 +49,4 @@ const TarjetaMiembro = ({miembro,
     )
 }
 export default TarjetaMiembro
+

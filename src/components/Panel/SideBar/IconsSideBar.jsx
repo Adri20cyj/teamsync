@@ -47,3 +47,23 @@ export const IconStack = () => (
         <path d="M12 16.54l-7.37-3.73L3 13.78l9 4.96 9-4.96-1.63-.97L12 16.54zm0-9.22l7.25 3.67L21 10.02l-9-4.95-9 4.95 1.75.97L12 7.32zM12 2L3 6.95l9 4.95 9-4.95L12 2z" />
     </svg>
 );
+
+export const IconTimeline = () => (
+    <svg className="icon-svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <rect x="5" y="3" width="6" height="6" rx="1" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <rect x="11" y="9" width="8" height="6" rx="1" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+        <rect x="7" y="15" width="5" height="6" rx="1" />
+    </svg>
+);
+
+export const IconCarga = () => (
+    <svg className="icon-svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 20h20" />
+        <rect x="4" y="12" width="3" height="8" rx="1" />
+        <rect x="10.5" y="7" width="3" height="13" rx="1" />
+        <rect x="17" y="4" width="3" height="16" rx="1" />
+    </svg>
+);

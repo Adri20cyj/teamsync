@@ -1,8 +1,10 @@
 .cronograma-contenedor {
     width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 28px;
+    min-width: 0;
 }
 
 .cronograma-gantt-scroll {
@@ -155,7 +157,8 @@
 
 /* Barras Gantt */
 .gantt-bar {
-    grid-row: 1; /* Render en la misma fila del subgrid */
+    grid-row: 1;
+    /* Render en la misma fila del subgrid */
     margin: 8px 4px;
     height: 28px;
     border-radius: 8px;

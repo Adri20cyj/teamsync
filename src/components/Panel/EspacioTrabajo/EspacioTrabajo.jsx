@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import "./EspacioTrabajo.css";
 import { PlusIcon, UserIcon, CalendarIcon, TimelineIcon, WorkloadIcon } from "./Icons/Icons";
+import VencimientoTareas from "./VencimientoTareas/VencimientoTareas";
 import CrearProyectoModal from "./CrearProyectoModal/CrearProyectoModal";
 import ProyectosGrid from "./ProyectosGrid/ProyectosGrid";
 import UnirseGrupoModal from "./UnirseGrupoModal/UnirseGrupoModal";
@@ -145,7 +146,7 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
 
     return (
         <div className="espacio-trabajo-container">
-            <header>
+            <header className="workspace-header-premium">
                 <div className="header-text-container">
                     <h1 className="proyectos-titulo">Tus Proyectos</h1>
                     <p className="proyectos-subtitulo">
@@ -169,6 +170,9 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
                     )}
                 </div>
             </header>
+
+            {/* Alertas de Tareas Urgentes */}
+            <VencimientoTareas proyectos={proyectos} onSelectProyecto={onSelectProyecto} />
 
             {/* Selector de Pestañas del Workspace */}
             <div className="workspace-tabs-switcher">

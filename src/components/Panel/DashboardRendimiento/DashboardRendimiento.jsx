@@ -12,12 +12,19 @@ const DashboardRendimiento = ({ pestanaActiva, tareas = [], miembros = [] }) => 
     const progreso = tareas && tareas.length > 0 ? Math.round((tareasCompletadas / tareas.length) * 100) : 0;
     const cargasTrabajo = miembros.map(m => {
         const tMiembro = tareas.filter(t => t.asignado === m.email || t.asignado === "Todos");
+        const pesoTotal = tMiembro.reduce((acc, t) => acc + (t.peso || 0), 0);
+        const pesoCompletado = tMiembro.filter(t => t.estado === "ENVIADO" || t.estado === "REVISADO").reduce((acc, t) => acc + (t.peso || 0), 0);
+        const progresoPonderado = pesoTotal > 0 ? Math.round((pesoCompletado / pesoTotal) * 100) : 0;
         return {
             email: m.email,
             total: tMiembro.length,
-            completado: tMiembro.filter(t => t.estaTerminada).length
+            completado: tMiembro.filter(t => t.estado === "ENVIADO" || t.estado === "REVISADO").length,
+            pesoTotal,
+            pesoCompletado,
+            progresoPonderado
         };
     });
+
 
     return (
         <>

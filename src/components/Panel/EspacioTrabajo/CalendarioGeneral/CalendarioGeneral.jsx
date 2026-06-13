@@ -162,21 +162,6 @@ const CalendarioGeneral = ({ proyectos = [], onSelectProyecto }) => {
                     <button className="cal-nav-btn" onClick={irMesSiguiente} title="Mes siguiente">›</button>
                 </div>
 
-                {/* Filtro buscador */}
-                <div className="cal-filtro-section">
-                    <span className="cal-filtro-titulo">FILTRAR CALENDARIO</span>
-                    <div className="cal-busqueda-wrap">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                        <input
-                            className="cal-busqueda"
-                            placeholder="Buscar entrega o hito..."
-                            value={busqueda}
-                            onChange={e => setBusqueda(e.target.value)}
-                        />
-                    </div>
-                </div>
 
                 {/* Filtro por proyecto */}
                 <div className="cal-filtro-section">
@@ -211,7 +196,7 @@ const CalendarioGeneral = ({ proyectos = [], onSelectProyecto }) => {
                     <span className="cal-filtro-titulo">
                         PRÓXIMAS ACADÉMICAS
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style={{ marginLeft: 6, color: "#f39c12" }}>
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" />
                         </svg>
                     </span>
                     {proximasTareas.length === 0 ? (
@@ -259,9 +244,9 @@ const CalendarioGeneral = ({ proyectos = [], onSelectProyecto }) => {
                 {/* Celdas */}
                 <div className="cal-grid">
                     {diasDelMes.map((celda, idx) => {
-                        const tareasDia   = celda.esActual ? (tareasPorDia[celda.dia]    || []) : [];
-                        const proysDia    = celda.esActual ? (proyectosPorDia[celda.dia] || []) : [];
-                        const esDiaHoy    = celda.esActual && esHoy(celda.dia);
+                        const tareasDia = celda.esActual ? (tareasPorDia[celda.dia] || []) : [];
+                        const proysDia = celda.esActual ? (proyectosPorDia[celda.dia] || []) : [];
+                        const esDiaHoy = celda.esActual && esHoy(celda.dia);
                         return (
                             <div
                                 key={idx}

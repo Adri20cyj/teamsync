@@ -109,36 +109,140 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
-.nombre-alumno {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    color: #8c86a6;
-    white-space: nowrap;
-    margin: 0;
-}
-
-.check {
-    width: 18px;
-    height: 18px;
-    accent-color: #8b7eff;
+/* Check circular */
+.check-circular {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(140, 134, 166, 0.4);
+    background: #0c071d;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    padding: 0;
+    outline: none;
 }
 
-.check:hover {
-    transform: scale(1.1);
+.check-circular:hover {
+    border-color: #8b7eff;
+    transform: scale(1.08);
+}
+
+.check-circular.completado {
+    background-color: #8b7eff;
+    border-color: #8b7eff;
+}
+
+.check-circular.completado::after {
+    content: "✓";
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Píldora Asignado */
+.asignado-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(23, 17, 44, 0.6);
+    border: 1px solid rgba(124, 109, 242, 0.15);
+    padding: 4px 12px 4px 4px;
+    border-radius: 999px;
+    color: #ffffff;
+    max-width: 180px;
+}
+
+.asignado-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(46, 204, 113, 0.15);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    color: #2ecc71;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.asignado-nombre {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Botón Eliminar */
+.btn-eliminar-item {
+    background: none;
+    border: none;
+    color: #8c86a6;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-eliminar-item:hover {
+    color: #ff4d6d;
+    background-color: rgba(255, 77, 109, 0.1);
+}
+
+/* Badges Nuevos Estados */
+.estado-pendiente {
+    background-color: rgba(140, 134, 166, 0.12);
+    color: #8c86a6;
+    border: 1px solid rgba(140, 134, 166, 0.2);
+}
+
+.estado-enviado {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.estado-revisado {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.badge-peso {
+    background-color: rgba(124, 109, 242, 0.08);
+    color: #8b7eff;
+    border: 1px solid rgba(124, 109, 242, 0.2);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 /* Completada / Checked list item override */
 .item-check-completada {
-    opacity: 0.6;
-    border-color: rgba(124, 109, 242, 0.04);
+    opacity: 0.75;
+    border-color: rgba(124, 109, 242, 0.15);
+    background-color: rgba(20, 13, 35, 0.5);
 }
 
 .item-check-completada .item-titulo {
     text-decoration: line-through;
     color: #8c86a6;
-}
+}
