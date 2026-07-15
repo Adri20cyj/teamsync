@@ -1,4 +1,3 @@
-import React from "react";
 import "./CronogramaTareas.css";
 
 const CronogramaTareas = ({ tareas = [], onSelectTarea }) => {

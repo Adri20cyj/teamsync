@@ -1,4 +1,3 @@
-import React from "react";
 import "./LineaTiempo.css";
 
 const LineaTiempo = ({ proyectos = [], onSelectProyecto }) => {

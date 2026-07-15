@@ -10,7 +10,6 @@ import RegistroPage from './pages/RegistroPage.jsx'
 import PerfilPage from './pages/PerfilPage.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminUsuariosPage from './pages/AdminUsuariosPage.jsx'
-import miembrosData from './data/miembros.js'
 
 const router = createBrowserRouter([
   {
@@ -42,14 +41,6 @@ const router = createBrowserRouter([
     element: <AdminUsuariosPage />
   },
 ])
-
-const onLoad = () => {
-  const storedMiembros = localStorage.getItem('miembros');
-  if (!storedMiembros) {
-    localStorage.setItem('miembros', JSON.stringify(miembrosData));
-  }
-}
-onLoad();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

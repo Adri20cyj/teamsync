@@ -21,6 +21,7 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
 
     // Sincronizar el estado de tareas cuando el proyecto cambia (ej. recargas)
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTareas(proyecto?.tareas || []);
     }, [proyecto]);
 
@@ -242,6 +243,7 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
             {/* Modal de Detalle de Tarea */}
             {tareaSeleccionada && (
                 <ModalTarea
+                    key={tareaSeleccionada.id}
                     tarea={tareaSeleccionada}
                     onClose={() => setTareaSeleccionada(null)}
                     onSave={(updated) => {

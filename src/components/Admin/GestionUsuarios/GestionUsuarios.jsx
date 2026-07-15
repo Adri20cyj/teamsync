@@ -78,11 +78,9 @@ const ModalCambiarContrasena = ({ usuario, onCerrar, onGuardar }) => {
 
 /* Componente principal */
 const GestionUsuarios = () => {
-    const { adminActual, cerrarSesionAdmin, obtenerUsuarios, toggleEstadoUsuario, cambiarContrasenaUsuario } = useAuth();
+    const { adminActual, cerrarSesionAdmin, usuarios, toggleEstadoUsuario, cambiarContrasenaUsuario } = useAuth();
     const navegar = useNavigate();
 
-    const [contador, setContador] = useState(0);
-    const usuarios = obtenerUsuarios();
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
 
     const handleCerrarSesion = () => {
@@ -94,12 +92,10 @@ const GestionUsuarios = () => {
         // La asincronía previene colisiones visuales al renderizar listas basadas en el mismo contexto
         await new Promise(r => setTimeout(r, 100));
         toggleEstadoUsuario(idUsuario);
-        setContador(c => c + 1);
     };
 
     const handleCambiarContrasena = (idUsuario, nuevaContrasena) => {
         cambiarContrasenaUsuario(idUsuario, nuevaContrasena);
-        setContador(c => c + 1);
     };
 
     const totalUsuarios = usuarios.length;
@@ -111,7 +107,7 @@ const GestionUsuarios = () => {
             <div className="gestion-header">
                 <div className="gestion-header-texto">
                     <h1>Gestión de Usuarios</h1>
-                    <p>Administra los usuarios registrados en TeamSync (Modo Local)</p>
+                    <p>Administra los usuarios registrados en TeamSync desde la API</p>
                 </div>
                 <div className="gestion-acciones-header">
                     <div className="badge-admin">

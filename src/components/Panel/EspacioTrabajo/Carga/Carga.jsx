@@ -1,4 +1,3 @@
-import React from "react";
 import "./Carga.css";
 
 const Carga = ({ proyectos = [], onSelectProyecto }) => {

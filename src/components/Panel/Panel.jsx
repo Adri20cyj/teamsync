@@ -8,7 +8,7 @@ import DashboardRendimiento from "./DashboardRendimiento/DashboardRendimiento"
 import { useAuth } from "../../context/AuthContext";
 
 const Panel = ({ onVolver, proyecto }) => {
-    const { usuarioActual, obtenerUsuarios } = useAuth();
+    const { usuarioActual, usuarios } = useAuth();
     const [pestanaActiva, setPestanaActiva] = useState('tareas');
 
     // 1. CAMBIO CRÍTICO: Buscamos el proyecto fresco directamente desde el usuario activo
@@ -19,7 +19,7 @@ const Panel = ({ onVolver, proyecto }) => {
 
     // 3. Derivamos los miembros del grupo: todos los usuarios que tienen este proyecto
     //    Se recalcula en cada render porque depende de usuarioActual (que cambia al quitar/agregar miembros)
-    const todosUsuarios = obtenerUsuarios();
+    const todosUsuarios = usuarios || [];
     const miembros = todosUsuarios
         .filter(u => u.proyectos?.some(p => p.id === proyectoSincronizado.id))
         .map((u, i) => ({ id: i + 1, userId: u.id, email: u.email, nombre: u.nombre, apellido: u.apellido }));

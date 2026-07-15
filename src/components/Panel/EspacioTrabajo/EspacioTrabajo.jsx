@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import "./EspacioTrabajo.css";
@@ -12,8 +12,8 @@ import LineaTiempo from "./LineaTiempo/LineaTiempo";
 import Carga from "./Carga/Carga";
 
 const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyectos", setTabActivo }) => {
-    const { actualizarProyectosUsuario, unirseGrupoPorCodigo } = useAuth();
-    const [proyectos, setProyectos] = useState(usuarioActual?.proyectos || []);
+    const { crearProyectoUsuario, unirseGrupoPorCodigo } = useAuth();
+    const proyectos = usuarioActual?.proyectos || [];
 
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarUnirseModal, setMostrarUnirseModal] = useState(false);
@@ -29,19 +29,6 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         endDate: ""
     });
 
-    useEffect(() => {
-        if (usuarioActual) {
-            actualizarProyectosUsuario(proyectos);
-        }
-    }, [proyectos]);
-
-    // Sincronizar proyectos cuando el usuarioActual cambie (ej. al agregar tareas desde panel)
-    useEffect(() => {
-        if (usuarioActual?.proyectos) {
-            setProyectos(usuarioActual.proyectos);
-        }
-    }, [usuarioActual]);
-
     const generarCodigoGrupo = () => {
         const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         let resultado = "";
@@ -50,23 +37,6 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         }
         return resultado;
     };
-
-    // Auto-generar códigos para proyectos antiguos que no tengan
-    useEffect(() => {
-        if (proyectos.length > 0) {
-            let modificado = false;
-            const proyectosActualizados = proyectos.map(p => {
-                if (!p.codigo) {
-                    modificado = true;
-                    return { ...p, codigo: generarCodigoGrupo() };
-                }
-                return p;
-            });
-            if (modificado) {
-                setProyectos(proyectosActualizados);
-            }
-        }
-    }, [proyectos]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -85,7 +55,7 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         return `${date.getDate()} ${months[date.getMonth()]}`;
     };
 
-    const handleCreateProyecto = (e) => {
+    const handleCreateProyecto = async (e) => {
         e.preventDefault();
         if (!nuevoProyecto.title) return;
 
@@ -113,24 +83,29 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
             creadorId: usuarioActual?.id || null
         };
 
-        setProyectos([...proyectos, project]);
-        setMostrarModal(false);
-        setNuevoProyecto({
-            title: "",
-            tag: "",
-            description: "",
-            iconType: "education",
-            membersCount: 1,
-            startDate: "",
-            endDate: ""
-        });
+        const resultado = await crearProyectoUsuario(project);
+
+        if (resultado?.exito) {
+            setMostrarModal(false);
+            setNuevoProyecto({
+                title: "",
+                tag: "",
+                description: "",
+                iconType: "education",
+                membersCount: 1,
+                startDate: "",
+                endDate: ""
+            });
+        } else if (resultado?.mensaje) {
+            alert(resultado.mensaje);
+        }
     };
 
-    const handleJoinGrupo = (e) => {
+    const handleJoinGrupo = async (e) => {
         e.preventDefault();
         if (!codigoInvitacion.trim()) return;
 
-        const resultado = unirseGrupoPorCodigo(codigoInvitacion);
+        const resultado = await unirseGrupoPorCodigo(codigoInvitacion);
         if (resultado.exito) {
             setCodigoInvitacion("");
             setMostrarUnirseModal(false);

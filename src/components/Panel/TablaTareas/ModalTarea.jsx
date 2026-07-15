@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./ModalTarea.css";
 
 const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
@@ -8,18 +8,6 @@ const ModalTarea = ({ tarea, onClose, onSave, onDelete, miembros = [] }) => {
     const [fechaLimite, setFechaLimite] = useState(tarea.fechaLimite || "");
     const [estado, setEstado] = useState(tarea.estado || "PENDIENTE");
     const [peso, setPeso] = useState(tarea.peso || 0);
-
-    // Actualizar estados si la tarea cambia externamente
-    useEffect(() => {
-        if (tarea) {
-            setTitulo(tarea.titulo || "");
-            setAsignado(tarea.asignado || "Todos");
-            setPrioridad(tarea.prioridad || "Media");
-            setFechaLimite(tarea.fechaLimite || "");
-            setEstado(tarea.estado || "PENDIENTE");
-            setPeso(tarea.peso || 0);
-        }
-    }, [tarea]);
 
     const handleSave = (e) => {
         e.preventDefault();

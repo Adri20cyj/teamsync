@@ -48,24 +48,7 @@ const Registro = () => {
             return;
         }
         setCargando(true);
-        await new Promise(r => setTimeout(r, 400));
-
-        const storedMiembros = localStorage.getItem("miembros");
-        const miembrosActuales = JSON.parse(storedMiembros) || [];
-
-        const nuevoMiembro = {
-            id: miembrosActuales.length ? Math.max(...miembrosActuales.map(m => m.id)) + 1 : 1,
-            email: datosFormulario.email
-        };
-
-        if (!miembrosActuales.some(m => m.email === nuevoMiembro.email)) {
-            const updatedMiembros = [...miembrosActuales, nuevoMiembro];
-            localStorage.setItem("miembros", JSON.stringify(updatedMiembros));
-        }
-
-        localStorage.setItem("usuarioActivo", datosFormulario.email);
-
-        const resultado = registrarUsuario(datosFormulario);
+        const resultado = await registrarUsuario(datosFormulario);
         setCargando(false);
 
         if (resultado.exito) {

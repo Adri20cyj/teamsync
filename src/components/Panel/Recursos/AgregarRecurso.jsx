@@ -43,16 +43,9 @@ const AgregarRecurso = ({ onAgregarRecurso }) => {
         e.preventDefault();
         if (nombre.trim() === "") return;
 
-        let finalUrl = "";
-        if (tipo === "url") {
-            finalUrl = url;
-            // If user did not specify protocol, add https://
-            if (finalUrl && !/^https?:\/\//i.test(finalUrl)) {
-                finalUrl = "https://" + finalUrl;
-            }
-        } else {
-            finalUrl = archivoData || "#";
-        }
+        const finalUrl = tipo === "url"
+            ? (url && !/^https?:\/\//i.test(url) ? "https://" + url : url)
+            : (archivoData || "#");
 
         onAgregarRecurso({
             id: Date.now(),

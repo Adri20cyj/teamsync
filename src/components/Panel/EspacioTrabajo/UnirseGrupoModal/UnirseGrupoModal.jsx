@@ -1,4 +1,3 @@
-import React from "react";
 import { CloseIcon, UserIcon } from "../Icons/Icons";
 
 const UnirseGrupoModal = ({

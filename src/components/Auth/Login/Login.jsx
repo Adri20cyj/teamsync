@@ -28,14 +28,11 @@ const Login = () => {
         
         setCargando(true);
         // Espera asíncrona controlada
-        await new Promise(r => setTimeout(r, 300));
-        
-        const resultado = login(datosFormulario.email, datosFormulario.contrasena);
+        const resultado = await login(datosFormulario.email, datosFormulario.contrasena);
         setCargando(false);
 
         if (resultado.exito) {
             // Redirige según el tipo de sesión detectado
-            localStorage.setItem("usuarioActivo", datosFormulario.email);
             if (resultado.tipo === 'admin') {
                 navegar('/admin/usuarios');
             } else {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import "./CalendarioGeneral.css";
 
 const DIAS_SEMANA = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];
@@ -12,11 +12,10 @@ const COLORES_PROYECTO = [
     "#a78bfa", "#f87171", "#4ade80", "#facc15", "#38bdf8"
 ];
 
-const CalendarioGeneral = ({ proyectos = [], onSelectProyecto }) => {
+const CalendarioGeneral = ({ proyectos = [] }) => {
     const hoy = new Date();
     const [anio, setAnio] = useState(hoy.getFullYear());
     const [mes, setMes] = useState(hoy.getMonth()); // 0-indexed
-    const [busqueda, setBusqueda] = useState("");
     const [proyectoFiltro, setProyectoFiltro] = useState(null); // null = todos
 
     // ── Asignar color único a cada proyecto ──
@@ -43,10 +42,9 @@ const CalendarioGeneral = ({ proyectos = [], onSelectProyecto }) => {
     const tareasFiltradas = useMemo(() => {
         return todasLasTareas.filter(t => {
             const matchProyecto = proyectoFiltro === null || t.proyectoId === proyectoFiltro;
-            const matchBusqueda = !busqueda || (t.titulo || "").toLowerCase().includes(busqueda.toLowerCase());
-            return matchProyecto && matchBusqueda;
+            return matchProyecto;
         });
-    }, [todasLasTareas, proyectoFiltro, busqueda]);
+    }, [todasLasTareas, proyectoFiltro]);
 
     // ── Navegación de mes ──
     const irMesAnterior = () => {

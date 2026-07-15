@@ -11,6 +11,7 @@ const Recursos = ({ proyecto }) => {
 
     // Sync state with project prop updates
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setRecursos(proyecto?.recursos || []);
     }, [proyecto]);
 

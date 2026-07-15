@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './DashboardRendimiento.css'
 import AvanceGeneral from './AvanceGeneral/AvanceGeneral'
 import AvanceIntegrante from './AvanceIntegrante/AvanceIntegrante'

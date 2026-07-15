@@ -1,4 +1,3 @@
-import React from "react";
 import "./GrupoCreado.css";
 import { GraduationIcon, BookIcon, ArrowRightIcon, UserIcon, CalendarIcon, CodeIcon, DesignIcon } from "../Icons/Icons";
 
