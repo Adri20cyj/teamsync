@@ -14,20 +14,20 @@ const Recursos = ({ proyecto }) => {
         setRecursos(proyecto?.recursos || []);
     }, [proyecto]);
 
-    const agregarRecurso = (nuevoRecurso) => {
+    const agregarRecurso = async (nuevoRecurso) => {
         const recursosActualizados = [...recursos, nuevoRecurso];
         setRecursos(recursosActualizados);
 
         const tareasActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.tareas || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
+        await actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
     };
 
-    const eliminarRecurso = (id) => {
+    const eliminarRecurso = async (id) => {
         const recursosActualizados = recursos.filter(r => r.id !== id);
         setRecursos(recursosActualizados);
 
         const tareasActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.tareas || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
+        await actualizarContenidoProyecto(proyecto.id, tareasActuales, recursosActualizados);
     };
 
     // Filter resources by selected category

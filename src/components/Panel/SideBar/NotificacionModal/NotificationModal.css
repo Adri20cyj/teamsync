@@ -115,6 +115,7 @@
     padding: 20px 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .notification-body-title {
@@ -123,7 +124,7 @@
     font-weight: 700;
     color: #8c86a6;
     letter-spacing: 0.08em;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .notification-empty-state {
@@ -140,6 +141,87 @@
     color: #8c86a6;
     font-style: italic;
     opacity: 0.7;
+}
+
+.notification-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 6px;
+}
+
+.notification-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+    background: rgba(124, 109, 242, 0.3);
+    border-radius: 4px;
+}
+
+.notification-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 109, 242, 0.5);
+}
+
+.notification-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 16px;
+    background-color: rgba(20, 13, 35, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.2s ease;
+}
+
+.notification-item:hover {
+    transform: translateX(2px);
+    background-color: rgba(20, 13, 35, 0.9);
+}
+
+.notification-item.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.notification-item.success {
+    border-left: 4px solid #10b981;
+}
+
+.notification-item.info {
+    border-left: 4px solid #3b82f6;
+}
+
+.notif-icono {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notif-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.notif-mensaje {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    color: #e2e0e7;
+    margin: 0;
+}
+
+.notif-tiempo {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    color: #726c8d;
 }
 
 /* Footer */
@@ -171,4 +253,32 @@
 
 .notification-close-btn:active {
     transform: scale(0.98);
+}
+
+/* Badge de Notificación en Sidebar */
+.notification-badge-sidebar {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    background-color: #ff4d6d;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(255, 77, 109, 0.5);
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+.app-sidebar.colapsado .notification-badge-sidebar {
+    top: 6px;
+    right: 16px;
+    transform: none;
 }

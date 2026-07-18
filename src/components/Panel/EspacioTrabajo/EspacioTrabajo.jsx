@@ -29,12 +29,6 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         endDate: ""
     });
 
-    useEffect(() => {
-        if (usuarioActual) {
-            actualizarProyectosUsuario(proyectos);
-        }
-    }, [proyectos]);
-
     // Sincronizar proyectos cuando el usuarioActual cambie (ej. al agregar tareas desde panel)
     useEffect(() => {
         if (usuarioActual?.proyectos) {
@@ -113,7 +107,9 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
             creadorId: usuarioActual?.id || null
         };
 
-        setProyectos([...proyectos, project]);
+        const proyectosActualizados = [...proyectos, project];
+        setProyectos(proyectosActualizados);
+        actualizarProyectosUsuario(proyectosActualizados);
         setMostrarModal(false);
         setNuevoProyecto({
             title: "",
@@ -126,16 +122,16 @@ const EspacioTrabajo = ({ onSelectProyecto, usuarioActual, tabActivo = "proyecto
         });
     };
 
-    const handleJoinGrupo = (e) => {
+    const handleJoinGrupo = async (e) => {
         e.preventDefault();
         if (!codigoInvitacion.trim()) return;
 
-        const resultado = unirseGrupoPorCodigo(codigoInvitacion);
+        const resultado = await unirseGrupoPorCodigo(codigoInvitacion);
         if (resultado.exito) {
             setCodigoInvitacion("");
             setMostrarUnirseModal(false);
         } else {
-            alert(resultado.mensaje);
+            alert(resultado.mensaje || "Error desconocido");
         }
     };
 

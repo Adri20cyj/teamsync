@@ -24,14 +24,14 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
         setTareas(proyecto?.tareas || []);
     }, [proyecto]);
 
-    const agregarTarea = (nuevaTarea) => {
+    const agregarTarea = async (nuevaTarea) => {
         const tareasActualizadas = [...tareas, nuevaTarea];
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
+        await actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
     };
 
-    const checkTarea = (id) => {
+    const checkTarea = async (id) => {
         const tareasActualizadas = tareas.map(tarea => {
             if (tarea.id === id) {
                 const nuevoEstado = (tarea.estado === "ENVIADO" || tarea.estado === "REVISADO") ? "PENDIENTE" : "ENVIADO";
@@ -42,7 +42,7 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
         });
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
+        await actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
 
         // Si la tarea que se checkea está abierta en el modal, actualizarla allí también
         if (tareaSeleccionada && tareaSeleccionada.id === id) {
@@ -55,18 +55,18 @@ const TablaTareas = ({ proyecto, miembros = [] }) => {
         }
     };
 
-    const actualizarTarea = (tareaActualizada) => {
+    const actualizarTarea = async (tareaActualizada) => {
         const tareasActualizadas = tareas.map(t => t.id === tareaActualizada.id ? tareaActualizada : t);
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
+        await actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
     };
 
-    const eliminarTarea = (idTarea) => {
+    const eliminarTarea = async (idTarea) => {
         const tareasActualizadas = tareas.filter(t => t.id !== idTarea);
         setTareas(tareasActualizadas);
         const recursosActuales = usuarioActual?.proyectos?.find(p => p.id === proyecto.id)?.recursos || [];
-        actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
+        await actualizarContenidoProyecto(proyecto.id, tareasActualizadas, recursosActuales);
     };
 
     // Helper para determinar estado calculado

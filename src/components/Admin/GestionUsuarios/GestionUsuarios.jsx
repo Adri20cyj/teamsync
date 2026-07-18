@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './GestionUsuarios.css';
@@ -82,8 +82,12 @@ const GestionUsuarios = () => {
     const navegar = useNavigate();
 
     const [contador, setContador] = useState(0);
-    const usuarios = obtenerUsuarios();
+    const [usuarios, setUsuarios] = useState([]);
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+
+    useEffect(() => {
+        obtenerUsuarios().then(lista => setUsuarios(lista || []));
+    }, [contador]);
 
     const handleCerrarSesion = () => {
         cerrarSesionAdmin();
@@ -91,14 +95,12 @@ const GestionUsuarios = () => {
     };
 
     const handleToggleEstado = async (idUsuario) => {
-        // La asincronía previene colisiones visuales al renderizar listas basadas en el mismo contexto
-        await new Promise(r => setTimeout(r, 100));
-        toggleEstadoUsuario(idUsuario);
+        await toggleEstadoUsuario(idUsuario);
         setContador(c => c + 1);
     };
 
-    const handleCambiarContrasena = (idUsuario, nuevaContrasena) => {
-        cambiarContrasenaUsuario(idUsuario, nuevaContrasena);
+    const handleCambiarContrasena = async (idUsuario, nuevaContrasena) => {
+        await cambiarContrasenaUsuario(idUsuario, nuevaContrasena);
         setContador(c => c + 1);
     };
 

@@ -65,7 +65,7 @@ const Registro = () => {
 
         localStorage.setItem("usuarioActivo", datosFormulario.email);
 
-        const resultado = registrarUsuario(datosFormulario);
+        const resultado = await registrarUsuario(datosFormulario);
         setCargando(false);
 
         if (resultado.exito) {

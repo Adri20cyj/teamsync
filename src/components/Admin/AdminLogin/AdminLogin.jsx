@@ -30,11 +30,11 @@ const AdminLogin = () => {
         // Pausa de asincronía para estabilizar el estado de carga en React
         await new Promise(r => setTimeout(r, 300));
         
-        const resultado = iniciarSesionAdmin(datosFormulario.email, datosFormulario.contrasena);
+        const resultado = await iniciarSesionAdmin(datosFormulario.email, datosFormulario.contrasena);
         setCargando(false);
 
         if (resultado.exito) {
-            navegar('/admin/usuarios');
+            navegar('/admin/usuarios', { replace: true });
         } else {
             setErrorMensaje(resultado.mensaje || 'Credenciales de administrador incorrectas.');
         }

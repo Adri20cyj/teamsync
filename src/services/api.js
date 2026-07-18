@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:3000/api';
 
 const request = async (method, path, body) => {
   const headers = { 'Content-Type': 'application/json' };

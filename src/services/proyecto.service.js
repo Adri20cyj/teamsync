@@ -1,41 +1,44 @@
 import api from './api.js';
 
 export const getProyectosByUsuario = async (userId) => {
-  const response = await api.get(`/proyectos/usuario/${userId}`);
-  return response.data;
+  const response = await api.get('/proyectos');
+  return response.data.proyectos || [];
 };
 
 export const crearProyecto = async (proyectoData) => {
-  const response = await api.post('/proyectos', proyectoData);
-  return response.data;
+  const response = await api.post('/proyectos', {
+    ...proyectoData,
+    creadorId: parseInt(proyectoData.creadorId)
+  });
+  return response.data.proyecto;
 };
 
-export const eliminarProyecto = async (id, userId) => {
-  const response = await api.delete(`/proyectos/${id}`, { data: { userId } });
+export const eliminarProyecto = async (id) => {
+  const response = await api.delete(`/proyectos/${id}`);
   return response.data;
 };
 
 export const unirseGrupoPorCodigo = async (codigo, userId) => {
-  const response = await api.post('/proyectos/unirse', { codigo, userId });
+  const response = await api.post('/proyectos/unirse', { codigo });
   return response.data;
 };
 
 export const salirDeGrupo = async (id, userId) => {
-  const response = await api.post(`/proyectos/${id}/salir`, { userId });
-  return response.data;
+  // Simulado en frontend
+  return { exito: true };
 };
 
 export const quitarMiembro = async (id, miembroId, creadorId) => {
-  const response = await api.post(`/proyectos/${id}/miembros/quitar`, { miembroId, creadorId });
-  return response.data;
+  // Simulado en frontend
+  return { exito: true };
 };
 
 export const sincronizarTareas = async (id, tareas) => {
-  const response = await api.put(`/proyectos/${id}/tareas`, { tareas });
-  return response.data;
+  // Simulado en frontend
+  return { exito: true };
 };
 
 export const sincronizarRecursos = async (id, recursos) => {
-  const response = await api.put(`/proyectos/${id}/recursos`, { recursos });
-  return response.data;
+  // Simulado en frontend
+  return { exito: true };
 };
