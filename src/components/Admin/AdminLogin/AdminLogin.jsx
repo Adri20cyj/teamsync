@@ -9,7 +9,7 @@ const AdminLogin = () => {
 
     const [datosFormulario, setDatosFormulario] = useState({
         email: '',
-        contrasena: ''
+        password: ''
     });
     const [errorMensaje, setErrorMensaje] = useState('');
     const [cargando, setCargando] = useState(false);
@@ -29,7 +29,7 @@ const AdminLogin = () => {
         setCargando(true);
         // Pausa de asincronía para estabilizar el estado de carga en React
         await new Promise(r => setTimeout(r, 300));
-        
+
         const resultado = await iniciarSesionAdmin(datosFormulario.email, datosFormulario.contrasena);
         setCargando(false);
 
