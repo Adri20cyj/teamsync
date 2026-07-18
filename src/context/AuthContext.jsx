@@ -465,9 +465,17 @@ export const AuthProvider = ({ children }) => {
         await actualizarProyectosUsuario(proyectosActualizados);
 
         try {
-            await crearProyecto(proyectoNormalizado);
-        } catch {
-            // El backend puede no estar listo todavía; el estado local ya quedó consistente.
+            const proyectoCreado = await crearProyecto(proyectoNormalizado);
+            if (proyectoCreado) {
+                const proyectoCreadoNormalizado = normalizarProyecto(proyectoCreado);
+                const proyectosFiltrados = proyectosActuales.filter(p => p.id !== proyectoNormalizado.id);
+                const proyectosActualizadosConReal = [...proyectosFiltrados, proyectoCreadoNormalizado];
+                await actualizarProyectosUsuario(proyectosActualizadosConReal);
+                return { exito: true, proyecto: proyectoCreadoNormalizado };
+            }
+        } catch (error) {
+            console.error("Error al crear el proyecto en el backend:", error);
+            // El backend puede no estar listo todavía; el estado local ya quedó consistente con el temporal.
         }
 
         return { exito: true, proyecto: proyectoNormalizado };
